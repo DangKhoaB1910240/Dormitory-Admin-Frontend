@@ -43,8 +43,8 @@ export class RoomReservationService {
     const url = this.getFullUrl(`api/v1/reservation/${id}`);
     return this.http.delete(url);
   }
-  updateStatusById(id: number, status: number): Observable<any> {
+  updateStatusById(id: number, status: number, note: string): Observable<any> {
     const url = this.getFullUrl(`api/v1/reservation/${id}`);
-    return this.http.patch(url, status);
+    return this.http.patch(url, { status, note });
   }
 }

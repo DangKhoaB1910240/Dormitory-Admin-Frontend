@@ -1,1 +1,331 @@
-<p>registration-room works!</p>
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Trình quản lý</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  Earnings (Monthly)
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  $40,000
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                >
+                  Earnings (Annual)
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  $215,000
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                >
+                  Tasks
+                </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                      50%
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div
+                        class="progress-bar bg-info"
+                        role="progressbar"
+                        style="width: 50%"
+                        aria-valuenow="50"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Requests Card Example -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                >
+                  Pending Requests
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-comments fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          >
+            <h6 class="m-0 font-weight-bold text-primary">
+              Đơn đăng ký của sinh viên
+            </h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div
+              *ngIf="sesmester"
+              class="text-center mb-3 mt-3"
+              style="font-weight: bold"
+            >
+              <div>
+                Học kỳ: {{ sesmester.sesmester }}<br />Năm học
+                {{ sesmester.schoolYear }}
+              </div>
+            </div>
+
+            <!--Modal: modalPush-->
+            <div
+              class="modal fade"
+              id="modalPush"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-notify modal-info" role="document">
+                <!--Content-->
+                <div class="modal-content text-center">
+                  <!--Header-->
+                  <div class="modal-header d-flex justify-content-center">
+                    <p class="heading text-danger" style="font-weight: bold">
+                      Hủy bỏ đơn đăng ký
+                    </p>
+                  </div>
+
+                  <!--Body-->
+                  <div class="modal-body">
+                    <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
+
+                    <p>Bạn phải gửi lý do từ chối cho sinh viên</p>
+                    <form>
+                      <!--  -->
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-outline-danger dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <span *ngIf="reasonCancle == ''; else lydo"
+                            >Lý do</span
+                          >
+                          <ng-template #lydo>
+                            <span>{{ reasonCancle }}</span>
+                          </ng-template>
+                          <i class="fa fa-caret-down"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              (click)="onSelectReason('Phòng đã đủ người')"
+                              >Phòng đã đủ người</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              (click)="
+                                onSelectReason('Phòng chuẩn bị sửa chữa')
+                              "
+                              >Phòng chuẩn bị sửa chữa</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              (click)="onSelectReason('Quá thời gian quy định')"
+                              >Quá thời gian quy định</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                      <!--  -->
+                    </form>
+                  </div>
+
+                  <!--Footer-->
+                  <div class="modal-footer flex-center">
+                    <a (click)="handleCancel()" class="btn btn-info"
+                      >Xác nhận</a
+                    >
+                    <a
+                      type="button"
+                      class="btn btn-outline-info waves-effect"
+                      data-dismiss="modal"
+                      #closeButton
+                      >Tắt</a
+                    >
+                  </div>
+                </div>
+                <!--/.Content-->
+              </div>
+            </div>
+            <!--Modal: modalPush-->
+            <table
+              id="example"
+              class="table text-left text-center"
+              *ngIf="roomReservation"
+              style="font-size: small"
+            >
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Họ tên</th>
+                  <th>MSSV</th>
+                  <th>Email</th>
+                  <th>SĐT</th>
+                  <th>Loại phòng</th>
+                  <th>Phòng</th>
+                  <th>Ngày đăng ký</th>
+                  <th>Thao tác</th>
+                  <th>Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let r of roomReservation; index as i">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ r.student.name }}</td>
+                  <td>{{ r.student.numberStudent }}</td>
+                  <td>{{ r.student.email }}</td>
+                  <td>{{ r.student.phone }}</td>
+                  <td>{{ r.roomType.name }}</td>
+                  <td>{{ r.room.numberRoom }}</td>
+                  <td>
+                    {{ r.bookingDateTime | date : "HH:mm:ss  dd/MM/yyyy" }}
+                  </td>
+                  <td *ngIf="r.status === 0">
+                    <span
+                      class="text-danger"
+                      style="cursor: pointer"
+                      (click)="
+                        openCancelModal(r.id, r.student.name, r.student.email);
+                        cancelReservationId = r.id
+                      "
+                      data-toggle="modal"
+                      data-target="#modalPush"
+                      >Hủy</span
+                    >
+                    |
+                    <span class="text-success" style="cursor: pointer"
+                      >Xác nhận</span
+                    >
+                  </td>
+                  <td *ngIf="r.status === 1">
+                    <div
+                      style="border: 1px none; background-color: #efefef"
+                      class="text-center"
+                    >
+                      <span class="text-success" style="font-weight: bold"
+                        >Đã xác nhận</span
+                      >
+                    </div>
+                  </td>
+                  <td *ngIf="r.status === 2">
+                    <div
+                      style="border: 1px none; background-color: #efefef"
+                      class="text-center"
+                    >
+                      <span class="text-danger" style="font-weight: bold"
+                        >Đã hủy</span
+                      >
+                    </div>
+                  </td>
+                  <td>{{ r.note }}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>STT</th>
+                  <th>Họ tên</th>
+                  <th>MSSV</th>
+                  <th>Email</th>
+                  <th>SĐT</th>
+                  <th>Loại phòng</th>
+                  <th>Phòng</th>
+                  <th>Ngày đăng ký</th>
+                  <th>Thao tác</th>
+                  <th>Ghi chú</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>
