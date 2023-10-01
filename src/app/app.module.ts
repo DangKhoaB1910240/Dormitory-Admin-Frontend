@@ -9,6 +9,9 @@ import { RegistrationRoomComponent } from './registration-room/registration-room
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     NotFoundComponent,
     RegistrationRoomComponent,
     SideBarComponent,
+    LoginComponent,
+    MainLayoutComponent,
+    LoginLayoutComponent,
   ],
   imports: [
     BrowserModule,

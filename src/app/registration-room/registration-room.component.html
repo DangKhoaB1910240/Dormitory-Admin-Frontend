@@ -280,7 +280,17 @@
                       >Hủy</span
                     >
                     |
-                    <span class="text-success" style="cursor: pointer"
+                    <span
+                      class="text-success"
+                      style="cursor: pointer"
+                      (click)="
+                        handleAccept(
+                          r.id,
+                          r.student,
+                          r.roomType.name,
+                          r.room.numberRoom
+                        )
+                      "
                       >Xác nhận</span
                     >
                   </td>

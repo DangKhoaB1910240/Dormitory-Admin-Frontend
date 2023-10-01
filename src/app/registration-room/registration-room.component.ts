@@ -11,6 +11,14 @@ import { SesmesterService } from '../Services/sesmester/sesmester.service';
 import { RoomReservationService } from '../Services/roomreservation/roomreservation.service';
 import { EmailService } from '../Services/email/email.service';
 import { Email } from '../Models/email/email';
+import { ContractService } from '../Services/contract/contract.service';
+import { Contract } from '../Models/contract/contract';
+import { Student } from '../Models/student/student';
+import { Admin } from '../Models/admin/admin';
+import { AdminService } from '../Services/admin/admin.service';
+import { AuthService } from '../Services/auth/auth.service';
+import { PeymentService } from '../Services/payment/peyment.service';
+import { Payment } from '../Models/payment/payment';
 
 @Component({
   selector: 'app-registration-room',
@@ -24,6 +32,7 @@ export class RegistrationRoomComponent {
   studentName: string = '';
   email: string = '';
   reasonCancle: string = '';
+  admin: Admin | null = null;
   /**
    sử dụng @ViewChild('closeButton') closeButton: ElementRef;
    để tham chiếu đến thẻ "a" bằng cách sử dụng template reference #closeButton.
@@ -34,7 +43,11 @@ export class RegistrationRoomComponent {
     private sesmesterService: SesmesterService,
     private registrationService: RoomReservationService,
     private emailService: EmailService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private contractService: ContractService,
+    private adminService: AdminService,
+    private authService: AuthService,
+    private paymentService: PeymentService
   ) {}
   ngOnInit(): void {
     this.sesmesterService.getSesmesterByStatus().subscribe({
@@ -43,6 +56,14 @@ export class RegistrationRoomComponent {
       },
       error: (error) => {},
     });
+    this.adminService
+      .getAdminByNoAdmin(this.authService.getUsername())
+      .subscribe({
+        next: (response: Admin) => {
+          this.admin = response;
+        },
+        error: (error) => {},
+      });
     this.getAllRoomReservation();
   }
   openCancelModal(id: number, studentName: string, email: string) {
@@ -67,13 +88,6 @@ export class RegistrationRoomComponent {
     //   showConfirmButton: false,
     //   timer: 1500,
     // });
-    console.log(
-      this.cancelReservationId +
-        ' ' +
-        this.reasonCancle +
-        ' ' +
-        this.studentName
-    );
     if (this.reasonCancle == '') {
       Swal.fire('Có lỗi xảy ra', 'Vui lòng chọn lý do hủy bỏ!', 'error');
     } else {
@@ -109,7 +123,79 @@ export class RegistrationRoomComponent {
       //Gửi mail thông báo
     }
   }
-  handleAccept(id: number, studentName: string) {}
+  handleAccept(
+    id: number,
+    student: Student,
+    roomType: string,
+    numberRoom: number
+  ) {
+    this.registrationService.updateStatusById(id, 1, '').subscribe({
+      next: (response: any) => {
+        this.getAllRoomReservation();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Xác nhận thành công',
+          showConfirmButton: false,
+          timer: 600,
+        });
+        this.addContractForAccepted(id, student, roomType, numberRoom);
+        let email = new Email(
+          student.email,
+          'ĐƠN ĐĂNG KÝ PHÒNG ĐÃ ĐƯỢC DUYỆT',
+          'Phòng của em đã được duyệt, em có thể dọn vào ở và đăng ký dịch vụ cần thiết theo thời gian quy định (nếu cần) '
+        );
+        if (student.name != null && student.email != null) {
+          console.log(email + ' ' + student.name + ' ' + student.email);
+          this.emailService.sendMail(email, student.name, student.email);
+        }
+      },
+      error: (error) => {
+        Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
+      },
+    });
+    /**
+     * Xử lý thêm vào hợp động
+     */
+  }
+  addContractForAccepted(
+    id: number,
+    student: Student,
+    roomType: string,
+    numberRoom: number
+  ) {
+    // Tạo đối tượng Contract hoặc lấy thông tin Contract cần thêm từ API nếu cần
+
+    const contractToAdd = new Contract(
+      null,
+      student,
+      this.admin,
+      this.sesmester,
+      null, // totalPrice (có thể để null hoặc 0 nếu không có giá trị cụ thể)
+      roomType, // roomType
+      numberRoom, // numberRoom
+      new Date(), // createdDate (có thể để null hoặc thời gian tạo mặc định)
+      [], // services (khởi tạo một danh sách rỗng)
+      null, // roomTypeUpdate (có thể để null hoặc giá trị mặc định)
+      null, // numberRoomUpdate (có thể để null hoặc giá trị mặc định),
+      null
+    );
+
+    this.contractService.addContract(contractToAdd).subscribe({
+      next: (response: any) => {},
+      error: (error) => {
+        Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
+      },
+    });
+  }
+  // addPayment(payment: Payment) {
+  //   this.paymentService.addPayment(payment).subscribe({
+  //     next: (response: any) => {},
+  //     error: (error) => {
+  //       Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
+  //     },
+  //   });
+  // }
   onSelectReason(reason: string) {
     this.reasonCancle = reason;
   }

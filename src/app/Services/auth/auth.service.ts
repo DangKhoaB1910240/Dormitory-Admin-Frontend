@@ -57,9 +57,8 @@ export class AuthService {
             //Kiểm duyệt vai trò
             this.getRoles(auth.getUsername()).subscribe((roles) => {
               if (roles.includes('STUDENT')) {
-                this.router.navigate(['/home']);
               } else {
-                this.router.navigate(['/admin']);
+                this.router.navigate(['/']);
               }
             });
           }
