@@ -4,12 +4,19 @@ import { RegistrationRoomComponent } from './registration-room/registration-room
 import { LoginComponent } from './login/login.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { RoomType } from './Models/roomtype/room-type';
+import { RoomTypeComponent } from './room-type/room-type.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { MaterialComponent } from './material/material.component';
 const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
     children: [
       { path: 'registration-room', component: RegistrationRoomComponent },
+      { path: 'room-type', component: RoomTypeComponent },
+      { path: 'rooms/:id', component: RoomsComponent },
+      { path: 'material', component: MaterialComponent },
       { path: '', redirectTo: '/registration-room', pathMatch: 'full' },
       // Thêm các đường dẫn cho các trang khác ở đây
     ],

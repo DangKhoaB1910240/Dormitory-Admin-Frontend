@@ -1,0 +1,87 @@
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Danh sách loại phòng</h1>
+    </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!--Modal: modalPush-->
+          <table
+            id="example"
+            class="table text-left text-center"
+            style="font-size: small"
+          >
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Loại phòng</th>
+                <th>Máy lạnh</th>
+                <th>Nấu ăn</th>
+                <th>Số lượng tối đa</th>
+                <th>Giá</th>
+                <th>Hình ảnh</th>
+                <th>Hoạt động</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of listRoomType; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ r.name }}</td>
+                <td>{{ !r.isAirConditioned ? "Không" : "Có" }}</td>
+                <td>{{ !r.isCooked ? "Không" : "Cho phép" }}</td>
+                <td>{{ r.maxQuantity }}</td>
+                <td>{{ r.price | number }}đ/ tháng</td>
+                <td>
+                  <img
+                    style="height: 222px; width: 350px"
+                    [src]="imageUrls[i + 1]"
+                    alt=""
+                  />
+                </td>
+                <td>{{ r.enable ? "Còn" : "Không" }}</td>
+                <td>
+                  <div>
+                    <a
+                      style="cursor: pointer; font-weight: bold"
+                      class="text-info"
+                      [routerLink]="['/rooms', r.id]"
+                      >Chi tiết</a
+                    >
+                  </div>
+                  <div>
+                    <a
+                      style="cursor: pointer; font-weight: bold"
+                      class="text-muted"
+                      >Chỉnh sửa</a
+                    >
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>STT</th>
+                <th>Loại phòng</th>
+                <th>Máy lạnh</th>
+                <th>Nấu ăn</th>
+                <th>Số lượng tối đa</th>
+                <th>Giá</th>
+                <th>Hình ảnh</th>
+                <th>Hoạt động</th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

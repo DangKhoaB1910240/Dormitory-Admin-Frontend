@@ -1,0 +1,148 @@
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Danh sách loại phòng</h1>
+    </div>
+
+    <!-- Content Row -->
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Danh sách sinh viên trong phòng</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <table class="table" style="font-size: small">
+              <thead class="table-dark">
+                <th>MSSV</th>
+                <th>Họ tên</th>
+                <th>Ngày sinh</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Ngành</th>
+                <th>Lớp</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of students">
+                  <td>{{ s.numberStudent }}</td>
+                  <td>{{ s.name }}</td>
+                  <td>{{ s.birthday | date : "dd-MM-yyyy" }}</td>
+                  <td>{{ s.email }}</td>
+                  <td>{{ s.phone }}</td>
+                  <td>{{ s.major }}</td>
+                  <td>{{ s.classroom }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!--Modal: modalPush-->
+          <table
+            id="example"
+            class="table text-left text-center"
+            style="font-size: small"
+          >
+            <thead>
+              <tr>
+                <th>Số phòng</th>
+                <th>Loại phòng</th>
+                <th>Số lượng hiện tại</th>
+                <th>Trạng thái</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of rooms; index as i">
+                <td>{{ r.numberRoom }}</td>
+                <td>{{ r.gender == 1 ? "Nam" : "Nữ" }}</td>
+                <td>{{ r.currentQuantity }}</td>
+                <td>
+                  <div class="text-center" *ngIf="r.enable">
+                    <div
+                      style="
+                        background-color: green;
+                        color: white;
+                        font-weight: BOLD;
+                      "
+                      class="p-2"
+                    >
+                      HOẠT ĐỘNG TỐT
+                    </div>
+                  </div>
+                  <div class="text-center" *ngIf="!r.enable">
+                    <div
+                      style="
+                        background-color: #b3b1b1;
+                        color: white;
+                        font-weight: BOLD;
+                      "
+                      class="p-2"
+                    >
+                      ĐANG SỬA CHỮA
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <a
+                      style="cursor: pointer; font-weight: bold"
+                      class="text-info"
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModal"
+                      (click)="handleViewListStudents(r.numberRoom)"
+                      >Danh sách sinh viên</a
+                    >
+                  </div>
+                  <div>
+                    <a
+                      style="cursor: pointer; font-weight: bold"
+                      class="text-muted"
+                      >Chỉnh sửa</a
+                    >
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Số phòng</th>
+                <th>Loại phòng</th>
+                <th>Số lượng hiện tại</th>
+                <th>Hoạt động</th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

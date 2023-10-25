@@ -12,6 +12,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { RoomTypeComponent } from './room-type/room-type.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { MaterialComponent } from './material/material.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
     LoginComponent,
     MainLayoutComponent,
     LoginLayoutComponent,
+    RoomTypeComponent,
+    RoomsComponent,
+    MaterialComponent,
   ],
   imports: [
     BrowserModule,
