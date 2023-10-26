@@ -15,7 +15,9 @@ export class RoomtypeService {
   private getFullUrl(endpoint: string): string {
     return `${AppConfig.baseUrl}/${endpoint}`;
   }
-
+  updateRoomType(id: number, r: RoomType): Observable<void> {
+    return this.http.patch<void>(this.getFullUrl(`api/v1/roomtype/${id}`), r);
+  }
   getQuantityRoomType(): Observable<number[]> {
     return this.http.get<number[]>(this.getFullUrl(`api/v1/roomtype/quantity`));
   }
