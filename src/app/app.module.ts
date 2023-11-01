@@ -15,6 +15,7 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { RoomTypeComponent } from './room-type/room-type.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { MaterialComponent } from './material/material.component';
+import { ContractComponent } from './contract/contract.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MaterialComponent } from './material/material.component';
     RoomTypeComponent,
     RoomsComponent,
     MaterialComponent,
+    ContractComponent,
   ],
   imports: [
     BrowserModule,

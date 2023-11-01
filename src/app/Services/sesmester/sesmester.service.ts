@@ -20,4 +20,7 @@ export class SesmesterService {
       this.getFullUrl(`api/v1/sesmester/status/true`)
     );
   }
+  getAllSesmester(): Observable<Sesmester[]> {
+    return this.http.get<Sesmester[]>(this.getFullUrl(`api/v1/sesmester`));
+  }
 }

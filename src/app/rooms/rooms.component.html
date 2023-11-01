@@ -60,6 +60,70 @@
         </div>
       </div>
     </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">
+              Nhập hóa đơn điện nước
+              <span style="color: lightcoral; font-weight: bold"
+                >tháng {{ nowDate | date : "MM" }}</span
+              >
+            </h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form>
+              <div>
+                <label for="finalWater">Chỉ số nước cuối</label>
+                <input
+                  [(ngModel)]="finalWater"
+                  name="finalWater"
+                  id="finalWater"
+                  type="number"
+                />
+              </div>
+              <div>
+                <label for="finalElectricity">Chỉ số điện cuối</label>
+                <input
+                  [(ngModel)]="finalElectricity"
+                  name="finalElectricity"
+                  id="finalElectricity"
+                  type="number"
+                />
+              </div>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="handleAcceptBill()"
+            >
+              Xác nhận
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <!-- Area Chart -->
       <div class="col-xl-12 col-lg-12">
@@ -126,6 +190,16 @@
                       style="cursor: pointer; font-weight: bold"
                       class="text-muted"
                       >Chỉnh sửa</a
+                    >
+                  </div>
+                  <div *ngIf="r.enable">
+                    <a
+                      style="cursor: pointer; font-weight: bold"
+                      class="text-secondary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModal1"
+                      (click)="getRoomId(r)"
+                      >Nhập hóa đơn điện nước</a
                     >
                   </div>
                 </td>

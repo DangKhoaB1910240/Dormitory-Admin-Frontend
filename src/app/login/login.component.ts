@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     if (localStorage.getItem('accessToken')) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/contract']);
     }
   }
 

@@ -1,0 +1,142 @@
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">
+        Danh sách hợp đồng sinh viên ở ký túc xá
+      </h1>
+    </div>
+    <div class="mb-3">
+      <form>
+        <div class="row">
+          <div class="col-sm-2">
+            Học kỳ:
+            <select
+              name="sesmester"
+              id="sesmester"
+              [(ngModel)]="sesmester"
+              (change)="filterContract()"
+            >
+              <option value="0">Tất cả</option>
+              <option *ngFor="let s of sesmesters" [value]="s.sesmester">
+                {{ s.sesmester }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Năm học:
+            <select
+              name="schoolYear"
+              id="schoolYear"
+              [(ngModel)]="schoolYear"
+              (change)="filterContract()"
+            >
+              <option value="all">Tất cả</option>
+              <option *ngFor="let s of sesmesters" [value]="s.schoolYear">
+                {{ s.schoolYear }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Ngành:
+            <select
+              name="major"
+              id="major"
+              [(ngModel)]="major"
+              (change)="filterContract()"
+            >
+              <option value="all">Tất cả</option>
+              <option *ngFor="let m of majors" [value]="m">{{ m }}</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Khóa:
+            <select
+              name="numberStudent"
+              id="numberStudent"
+              [(ngModel)]="numberStudent"
+              (change)="filterContract()"
+            >
+              <option value="all">Tất cả</option>
+              <option *ngFor="let n of numberStudents" [value]="n">
+                {{ n }}....
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Giới tính:
+            <select
+              name="gender"
+              id="gender"
+              [(ngModel)]="gender"
+              (change)="filterContract()"
+            >
+              <option value="2">Tất cả</option>
+              <option value="1">Nam</option>
+              <option value="0">Nữ</option>
+            </select>
+          </div>
+          <div class="col-sm-6"></div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!--Modal: modalPush-->
+          <table
+            id="example"
+            class="table text-left text-center"
+            style="font-size: small"
+          >
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>MSSV</th>
+                <th>Họ tên</th>
+                <th>Ngành</th>
+                <th>Lớp</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Giới tính</th>
+                <th>Loại phòng</th>
+                <th>Phòng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of contracts; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ c.numberStudent }}</td>
+                <td>{{ c.name }}</td>
+                <td>{{ c.major }}</td>
+                <td>{{ c.classroom }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.phone }}</td>
+                <td>{{ c.gender == 1 ? "Nam" : "Nữ" }}</td>
+                <td>{{ c.roomType }}</td>
+                <td>{{ c.numberRoom }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>STT</th>
+                <th>MSSV</th>
+                <th>Họ tên</th>
+                <th>Ngành</th>
+                <th>Lớp</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Giới tính</th>
+                <th>Loại phòng</th>
+                <th>Phòng</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

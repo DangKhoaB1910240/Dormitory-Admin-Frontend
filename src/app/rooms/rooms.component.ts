@@ -5,6 +5,11 @@ import { RoomService } from '../Services/room/room.service';
 import { ContractService } from '../Services/contract/contract.service';
 import { Student } from '../Models/student/student';
 import Swal from 'sweetalert2';
+import { BillService } from '../Services/bill/bill.service';
+import { Admin } from '../Models/admin/admin';
+import { AdminService } from '../Services/admin/admin.service';
+import { AuthService } from '../Services/auth/auth.service';
+import { BillRequestDTO } from '../Models/bill/bill-request-dto';
 
 @Component({
   selector: 'app-rooms',
@@ -16,10 +21,18 @@ export class RoomsComponent implements OnInit {
   errorMessage: string = '';
   students: Student[] = [];
   id!: number;
+  nowDate: Date = new Date();
+  roomId: number | null = null;
+  finalWater: number | null = null;
+  finalElectricity: number | null = null;
+  admin!: Admin;
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService,
-    private contractService: ContractService
+    private contractService: ContractService,
+    private billService: BillService,
+    private adminService: AdminService,
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -37,6 +50,14 @@ export class RoomsComponent implements OnInit {
         },
       });
     });
+    this.adminService
+      .getAdminByNoAdmin(this.authService.getUsername())
+      .subscribe({
+        next: (response: Admin) => {
+          this.admin = response;
+        },
+        error: (error) => {},
+      });
   }
   handleViewListStudents(numberRoom: number) {
     this.contractService
@@ -49,5 +70,29 @@ export class RoomsComponent implements OnInit {
           Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
         },
       });
+  }
+  handleAcceptBill() {
+    if (this.finalElectricity && this.finalWater && this.roomId) {
+      let request = new BillRequestDTO(
+        this.finalElectricity,
+        this.finalWater,
+        this.roomId
+      );
+      this.billService.addBill(this.admin.id, request).subscribe({
+        next: (response: any) => {
+          Swal.fire(
+            'Thành công',
+            'Bạn đã thêm háo đơn điện nước vào thành công',
+            'success'
+          );
+        },
+        error: (error) => {
+          Swal.fire('Thất bại', error.error.message, 'error');
+        },
+      });
+    }
+  }
+  getRoomId(r: Room) {
+    this.roomId = r.id;
   }
 }

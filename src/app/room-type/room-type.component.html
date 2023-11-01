@@ -39,15 +39,7 @@
                 <td>{{ !r.isCooked ? "Không" : "Cho phép" }}</td>
                 <td>{{ r.maxQuantity }}</td>
                 <td>
-                  <div *ngIf="showPrice">
-                    {{ r.price | number }}đ/ tháng
-                    <a
-                      class="text-info"
-                      style="cursor: pointer"
-                      (click)="changePrice()"
-                      >Chỉnh sửa</a
-                    >
-                  </div>
+                  <div *ngIf="showPrice">{{ r.price | number }}đ/ tháng</div>
                   <div *ngIf="!showPrice">
                     <input type="text" [value]="r.price" />
                   </div>
