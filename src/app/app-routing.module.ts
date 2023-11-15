@@ -10,6 +10,12 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { MaterialComponent } from './material/material.component';
 import { Contract } from './Models/contract/contract';
 import { ContractComponent } from './contract/contract.component';
+import { BillComponent } from './bill/bill.component';
+import { RegisterServiceComponent } from './register-service/register-service.component';
+import { StatisticalComponent } from './statistical/statistical.component';
+import { ServiceComponent } from './service/service.component';
+import { InformationComponent } from './information/information.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +25,13 @@ const routes: Routes = [
       { path: 'rooms/:id', component: RoomsComponent },
       { path: 'material', component: MaterialComponent },
       { path: 'contract', component: ContractComponent },
-      { path: '', redirectTo: '/registration-room', pathMatch: 'full' },
+      { path: 'bill', component: BillComponent },
+      { path: 'register-service', component: RegisterServiceComponent },
+      { path: 'statistical', component: StatisticalComponent },
+      { path: 'service', component: ServiceComponent },
+      { path: 'information', component: InformationComponent },
+      { path: 'password', component: ChangePasswordComponent },
+      { path: '', redirectTo: 'contract', pathMatch: 'full' },
       // Thêm các đường dẫn cho các trang khác ở đây
     ],
   },

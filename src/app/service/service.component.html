@@ -1,0 +1,254 @@
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Content Row -->
+
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          >
+            <h6 class="m-0 font-weight-bold text-primary">QUẢN LÝ DỊCH VỤ</h6>
+            <div class="dropdown no-arrow">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                aria-labelledby="dropdownMenuLink"
+              >
+                <div class="dropdown-header">Dropdown Header:</div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </div>
+          </div>
+          <!-- The Modal -->
+          <div class="modal fade" id="myModal1">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Thêm dịch vụ</h4>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <form>
+                    <div>
+                      <label for="name">Tên dịch vụ</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        [(ngModel)]="addService.name"
+                      />
+                    </div>
+                    <div>
+                      <label for="price">Giá</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="price"
+                        id="price"
+                        [(ngModel)]="addService.price"
+                      />
+                    </div>
+                    <div>
+                      <label for="description">Mô tả</label>
+                      <textarea
+                        name="description"
+                        id="description"
+                        class="form-control"
+                        cols="30"
+                        rows="10"
+                        [(ngModel)]="addService.description"
+                      ></textarea>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="addNewService()"
+                  >
+                    Thêm
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- The Modal -->
+          <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Chỉnh sửa dịch vụ</h4>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <form *ngIf="service">
+                    <input type="hidden" [(ngModel)]="service.id" />
+                    <div>
+                      <label for="name">Tên dịch vụ</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        [(ngModel)]="service.name"
+                      />
+                    </div>
+                    <div>
+                      <label for="price">Giá</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="price"
+                        id="price"
+                        [(ngModel)]="service.price"
+                      />
+                    </div>
+                    <div>
+                      <label for="description">Mô tả</label>
+                      <textarea
+                        name="description"
+                        id="description"
+                        class="form-control"
+                        cols="30"
+                        rows="10"
+                        [(ngModel)]="service.description"
+                        >{{ service.description }}</textarea
+                      >
+                    </div>
+                    <div>
+                      <label>Trạng thái</label><br />
+                      <input
+                        type="radio"
+                        [(ngModel)]="service.enable"
+                        [value]="true"
+                        name="enable"
+                      />
+                      Hoạt động
+                      <input
+                        type="radio"
+                        [(ngModel)]="service.enable"
+                        [value]="false"
+                        name="enable"
+                      />
+                      Tạm ngưng
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="updateService()"
+                  >
+                    Cập nhật
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div
+              class="text-muted"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal1"
+            >
+              Thêm dịch vụ
+            </div>
+            <table
+              id="example"
+              class="table table-striped text-center"
+              style="font-size: small; width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Dịch vụ</th>
+                  <th>Giá</th>
+                  <th>Mô tả</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of services; index as i">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ s.name }}</td>
+                  <td>{{ s.price | number }}đ</td>
+                  <td>{{ s.description }}</td>
+                  <td>
+                    {{
+                      s.enable == true ? "Đang hoạt động" : "Ngừng hoạt động"
+                    }}
+                  </td>
+                  <td>
+                    <span
+                      class="text-info"
+                      style="cursor: pointer"
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModal"
+                      (click)="handleEdit(s)"
+                      >Chỉnh sửa</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>

@@ -10,6 +10,7 @@ import { Admin } from '../Models/admin/admin';
 import { AdminService } from '../Services/admin/admin.service';
 import { AuthService } from '../Services/auth/auth.service';
 import { BillRequestDTO } from '../Models/bill/bill-request-dto';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-rooms',
@@ -32,7 +33,8 @@ export class RoomsComponent implements OnInit {
     private contractService: ContractService,
     private billService: BillService,
     private adminService: AdminService,
-    private authService: AuthService
+    private authService: AuthService,
+    private spinner: NgxSpinnerService
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -72,21 +74,38 @@ export class RoomsComponent implements OnInit {
       });
   }
   handleAcceptBill() {
+    if (!this.finalElectricity || !this.finalWater) {
+      Swal.fire('Thất bại', 'Vui lòng nhập đầy đủ thông tin', 'error');
+      return;
+    }
+    if (this.finalElectricity <= 0) {
+      Swal.fire('Thất bại', 'Vui lòng nhập chỉ số điện cuối > 0', 'error');
+      return;
+    }
+    if (this.finalWater <= 0) {
+      Swal.fire('Thất bại', 'Vui lòng nhập chỉ số nước cuối > 0', 'error');
+      return;
+    }
     if (this.finalElectricity && this.finalWater && this.roomId) {
       let request = new BillRequestDTO(
         this.finalElectricity,
         this.finalWater,
         this.roomId
       );
+      this.spinner.show();
       this.billService.addBill(this.admin.id, request).subscribe({
         next: (response: any) => {
+          this.spinner.hide();
           Swal.fire(
             'Thành công',
             'Bạn đã thêm háo đơn điện nước vào thành công',
             'success'
           );
+          this.finalElectricity = null;
+          this.finalWater = null;
         },
         error: (error) => {
+          this.spinner.hide();
           Swal.fire('Thất bại', error.error.message, 'error');
         },
       });
@@ -94,5 +113,16 @@ export class RoomsComponent implements OnInit {
   }
   getRoomId(r: Room) {
     this.roomId = r.id;
+  }
+  updateEnable(r: Room) {
+    r.enable = !r.enable;
+    this.roomService.updateRoom(r.id, r).subscribe({
+      next: (response: void) => {
+        Swal.fire('Thành công', 'Bạn đã cập nhật thành công', 'success');
+      },
+      error: (error) => {
+        Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
+      },
+    });
   }
 }

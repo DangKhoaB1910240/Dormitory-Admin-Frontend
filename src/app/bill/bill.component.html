@@ -1,0 +1,276 @@
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">Danh sách hóa đơn điện nước</h1>
+    </div>
+    <!-- The Modal -->
+    <div class="modal" id="myModal1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Cập nhật lại chỉ số điện nước</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form>
+              <div>
+                <label for="finalWater">Chỉ số nước cuối</label>
+                <br />
+                <input
+                  [(ngModel)]="finalWater"
+                  name="finalWater"
+                  id="finalWater"
+                  type="number"
+                />
+              </div>
+              <div>
+                <label for="finalElectricity">Chỉ số điện cuối</label>
+                <br />
+                <input
+                  [(ngModel)]="finalElectricity"
+                  name="finalElectricity"
+                  id="finalElectricity"
+                  type="number"
+                />
+              </div>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="updateBill()"
+            >
+              Xác nhận
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- The Modal -->
+    <ng-container *ngIf="t">
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">
+                THỐNG KÊ THÁNG {{ nowDate.getMonth() + 1 }} CỦA DÃY
+                {{ t.roomType }}
+              </h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-6" style="color: #4caf50">
+                  <h5>Danh sách phòng đã thanh toán</h5>
+                  <ul>
+                    <li *ngFor="let r of t.listRoomsPaids">Phòng {{ r }}</li>
+                  </ul>
+                </div>
+                <div class="col-sm-6" style="color: #aca9a9">
+                  <h5>Danh sách phòng chưa thanh toán</h5>
+                  <ul>
+                    <li *ngFor="let r of t.listRoomsUnpaids">Phòng {{ r }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!--Modal: modalPush-->
+          <table
+            id="example"
+            class="table text-left text-center"
+            style="font-size: small"
+          >
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Loại phòng</th>
+                <th>Phòng</th>
+                <th>Chỉ số nước đầu</th>
+                <th>Chỉ số nước cuối</th>
+                <th>Chỉ số điện đầu</th>
+                <th>Chỉ số điện cuối</th>
+                <th>Tổng tiền</th>
+                <th>Ngày lập</th>
+                <th>Người lập</th>
+                <th>Người cập nhật</th>
+                <th>Trạng thái</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let b of bills; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ b.roomType }}</td>
+                <td>{{ b.numberRoom }}</td>
+                <td>{{ b.initialWater }}</td>
+                <td>{{ b.finalWater }}</td>
+                <td>{{ b.initialElectricity }}</td>
+                <td>{{ b.finalElectricity }}</td>
+                <td>{{ b.price | number }}đ</td>
+                <td>{{ b.createdDate | date : "dd-MM-yyyy" }}</td>
+                <td>{{ b.admin.name }}</td>
+                <td>
+                  {{ b.admin2 == null ? "" : b.admin2.name }}
+                </td>
+                <td>
+                  <div class="text-center" *ngIf="b.status">
+                    <div
+                      style="
+                        background-color: green;
+                        color: white;
+                        font-weight: BOLD;
+                      "
+                      class="p-2"
+                    >
+                      ĐÃ THANH TOÁN
+                    </div>
+                  </div>
+                  <div class="text-center" *ngIf="!b.status">
+                    <div
+                      style="
+                        background-color: #b3b1b1;
+                        color: white;
+                        font-weight: BOLD;
+                      "
+                      class="p-2"
+                    >
+                      CHƯA THANH TOÁN
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <a
+                    class="text-info"
+                    style="font-weight: bold; cursor: pointer"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal1"
+                    (click)="getBillId(b)"
+                    >Chỉnh sửa</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-container *ngIf="totalElements && limit">
+            <app-pagination
+              [currentPage]="currentPage"
+              [limit]="limit"
+              [total]="totalElements"
+              (changePage)="changePage($event)"
+            ></app-pagination>
+          </ng-container>
+        </div>
+      </div>
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Thống kê hàng tháng</h1>
+      </div>
+
+      <div style="display: flex" class="mb-4">
+        <div
+          style="
+            background-color: #4caf50;
+            color: #fff;
+            width: 20%;
+            height: 30px;
+            border-radius: 4px;
+          "
+          class="mb-2 text-center mr-3"
+        >
+          % Số phòng đã thanh toán
+        </div>
+        <div
+          class="text-center"
+          style="
+            background-color: #ddd;
+            width: 20%;
+            height: 30px;
+            border-radius: 4px;
+          "
+        >
+          % Số phòng chưa thanh toán
+        </div>
+      </div>
+      <div class="text-center mb-3 mt-3">
+        <label for="" style="font-weight: bold">Thời gian thống kê: </label
+        ><br />
+        <input type="date" [(ngModel)]="editDate" (change)="updateDate()" />
+      </div>
+      <ng-container *ngIf="thongKe.length != 0; else noData">
+        <div class="row" style="text-align: justify">
+          <div class="col-sm-6" *ngFor="let t of thongKe">
+            <div style="font-weight: bold" class="mb-2">
+              Dãy {{ t.roomType }}
+            </div>
+            <div>
+              Tổng tiền điện nước tháng này: {{ t.totalPrice | number }}đ
+            </div>
+            <div>Số tiền thu được hiện tại: {{ t.currentPrice | number }}đ</div>
+            <div>
+              Số tiền còn nợ: {{ t.totalPrice - t.currentPrice | number }}đ
+            </div>
+            <app-progress-bar
+              [percentage]="
+                (t.numberOfRoomsPaid * 100) /
+                (t.numberOfRoomsPaid + t.numberOfRoomsUnpaid)
+              "
+              (click)="showRoomType(t)"
+              class="mt-3"
+              style="cursor: pointer"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal"
+            ></app-progress-bar>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noData>
+        <div class="text-center">Chưa có dữ liệu của tháng này</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

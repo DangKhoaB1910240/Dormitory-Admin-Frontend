@@ -14,7 +14,17 @@ export class ServiceService {
   private getFullUrl(endpoint: string): string {
     return `${AppConfig.baseUrl}/${endpoint}`;
   }
-  getAllService(): Observable<Service[]> {
+  getAllServices(): Observable<Service[]> {
     return this.http.get<Service[]>(this.getFullUrl(`api/v1/service`));
+  }
+
+  updateAllServices(service: Service): Observable<void> {
+    return this.http.put<void>(this.getFullUrl(`api/v1/service`), service);
+  }
+  getServiceById(id: number): Observable<Service> {
+    return this.http.get<Service>(this.getFullUrl(`api/v1/service/${id}`));
+  }
+  createService(service: Service): Observable<void> {
+    return this.http.post<void>(this.getFullUrl(`api/v1/service`), service);
   }
 }

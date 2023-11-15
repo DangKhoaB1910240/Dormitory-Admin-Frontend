@@ -16,7 +16,16 @@ import { RoomTypeComponent } from './room-type/room-type.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { MaterialComponent } from './material/material.component';
 import { ContractComponent } from './contract/contract.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterServiceComponent } from './register-service/register-service.component';
+import { BillComponent } from './bill/bill.component';
+import { StatisticalComponent } from './statistical/statistical.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { ServiceComponent } from './service/service.component';
+import { InformationComponent } from './information/information.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +40,14 @@ import { ContractComponent } from './contract/contract.component';
     RoomsComponent,
     MaterialComponent,
     ContractComponent,
+    RegisterServiceComponent,
+    BillComponent,
+    StatisticalComponent,
+    PaginationComponent,
+    ProgressBarComponent,
+    ServiceComponent,
+    InformationComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +55,9 @@ import { ContractComponent } from './contract/contract.component';
     ReactiveFormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     FormsModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

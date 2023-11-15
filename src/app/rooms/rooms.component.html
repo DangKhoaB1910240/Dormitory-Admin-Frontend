@@ -5,7 +5,11 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Danh sách loại phòng</h1>
     </div>
-
+    <ngx-spinner
+      bdColor="rgba(1.5, 0, 0, 1)"
+      template="<img src='https://media.giphy.com/media/o8igknyuKs6aY/giphy.gif' />"
+    >
+    </ngx-spinner>
     <!-- Content Row -->
     <!-- The Modal -->
     <div class="modal" id="myModal">
@@ -85,6 +89,7 @@
             <form>
               <div>
                 <label for="finalWater">Chỉ số nước cuối</label>
+                <br />
                 <input
                   [(ngModel)]="finalWater"
                   name="finalWater"
@@ -94,6 +99,7 @@
               </div>
               <div>
                 <label for="finalElectricity">Chỉ số điện cuối</label>
+                <br />
                 <input
                   [(ngModel)]="finalElectricity"
                   name="finalElectricity"
@@ -149,30 +155,14 @@
                 <td>{{ r.gender == 1 ? "Nam" : "Nữ" }}</td>
                 <td>{{ r.currentQuantity }}</td>
                 <td>
-                  <div class="text-center" *ngIf="r.enable">
-                    <div
-                      style="
-                        background-color: green;
-                        color: white;
-                        font-weight: BOLD;
-                      "
-                      class="p-2"
-                    >
+                  <select (change)="updateEnable(r)">
+                    <option value="HOẠT ĐỘNG TỐT" [selected]="r.enable">
                       HOẠT ĐỘNG TỐT
-                    </div>
-                  </div>
-                  <div class="text-center" *ngIf="!r.enable">
-                    <div
-                      style="
-                        background-color: #b3b1b1;
-                        color: white;
-                        font-weight: BOLD;
-                      "
-                      class="p-2"
-                    >
+                    </option>
+                    <option value="ĐANG SỬA CHỮA" [selected]="!r.enable">
                       ĐANG SỬA CHỮA
-                    </div>
-                  </div>
+                    </option>
+                  </select>
                 </td>
                 <td>
                   <div>
@@ -183,13 +173,6 @@
                       data-bs-target="#myModal"
                       (click)="handleViewListStudents(r.numberRoom)"
                       >Danh sách sinh viên</a
-                    >
-                  </div>
-                  <div>
-                    <a
-                      style="cursor: pointer; font-weight: bold"
-                      class="text-muted"
-                      >Chỉnh sửa</a
                     >
                   </div>
                   <div *ngIf="r.enable">

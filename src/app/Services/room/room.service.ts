@@ -17,4 +17,7 @@ export class RoomService {
   getAllRoomByRoomType_Id(id: number): Observable<Room[]> {
     return this.http.get<Room[]>(this.getFullUrl(`api/v1/room/${id}`));
   }
+  updateRoom(id: number, r: Room): Observable<void> {
+    return this.http.patch<void>(this.getFullUrl(`api/v1/room/${id}`), r);
+  }
 }

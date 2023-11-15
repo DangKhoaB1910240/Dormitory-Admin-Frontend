@@ -74,4 +74,10 @@ export class AuthService {
       )
       .subscribe();
   }
+  changePassword(username: string, password: any): Observable<void> {
+    return this.http.put<void>(
+      this.getFullUrl(`api/v1/user/change-password/${username}`),
+      password
+    );
+  }
 }

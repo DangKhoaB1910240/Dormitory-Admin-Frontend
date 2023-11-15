@@ -11,7 +11,7 @@
     <div class="sidebar-brand-icon">
       <i class="fas fa-hotel"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">DORMITORY</div>
+    <div class="sidebar-brand-text mx-3">KÝ TÚC XÁ</div>
   </a>
 
   <!-- Divider -->
@@ -29,7 +29,7 @@
   <hr class="sidebar-divider" />
 
   <!-- Heading -->
-  <div class="sidebar-heading">THÔNG TIN CÁ NHÂN</div>
+  <div class="sidebar-heading" routerLink="/information">THÔNG TIN CÁ NHÂN</div>
 
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
@@ -52,8 +52,10 @@
     >
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Quyền riêng tư:</h6>
-        <a class="collapse-item" href="buttons.html">Xem thông tin cá nhân</a>
-        <a class="collapse-item" href="cards.html">Đổi mật khẩu</a>
+        <a class="collapse-item" routerLink="/information"
+          >Xem thông tin cá nhân</a
+        >
+        <a class="collapse-item" routerLink="/password">Đổi mật khẩu</a>
       </div>
     </div>
   </li>
@@ -84,6 +86,11 @@
       data-parent="#accordionSidebar"
     >
       <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Thống kê:</h6>
+        <a class="collapse-item" routerLink="/statistical"
+          >Thống kê sinh viên</a
+        >
+
         <h6 class="collapse-header">Sinh viên:</h6>
         <a class="collapse-item" routerLink="/contract">Sinh viên đã ở</a>
         <a class="collapse-item" href="login.html">Danh sách đen</a>
@@ -95,14 +102,19 @@
         <div class="collapse-divider"></div>
 
         <h6 class="collapse-header">Dịch vụ:</h6>
-        <a class="collapse-item" href="login.html">Xem chi tiết</a>
-        <a class="collapse-item" href="login.html">Thêm dịch vụ</a>
-        <a class="collapse-item" href="login.html">Đơn đăng ký</a>
+        <a class="collapse-item" routerLink="/service">Quản lý dịch vụ</a>
+        <a class="collapse-item" routerLink="/register-service"
+          >Dịch vụ sinh viên đăng ký</a
+        >
+        <a class="collapse-item" href="login.html"></a>
         <div class="collapse-divider"></div>
 
         <h6 class="collapse-header">Phản hồi từ sinh viên:</h6>
         <a class="collapse-item" routerLink="/material">Cơ sở vật chất</a>
-        <a class="collapse-item" href="login.html">Đóng góp ý kiến</a>
+        <div class="collapse-divider"></div>
+
+        <h6 class="collapse-header">Hóa đơn điện nước:</h6>
+        <a class="collapse-item" routerLink="/bill">Xem chi tiết</a>
         <div class="collapse-divider"></div>
       </div>
     </div>
