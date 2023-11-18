@@ -19,6 +19,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class RoomsComponent implements OnInit {
   rooms: Room[] = [];
+  room: Room = {
+    id: null,
+    numberRoom: 0,
+    currentQuantity: null,
+    enable: null,
+    gender: null,
+  };
   errorMessage: string = '';
   students: Student[] = [];
   id!: number;
@@ -41,16 +48,7 @@ export class RoomsComponent implements OnInit {
       this.id = params['id'];
 
       //Danh sách room
-      this.roomService.getAllRoomByRoomType_Id(this.id).subscribe({
-        next: (response: Room[]) => {
-          this.rooms = response;
-        },
-        error: (error) => {
-          if (error.error) {
-            this.errorMessage = 'Không có loại phòng này. Quay lại ';
-          }
-        },
-      });
+      this.getAllRoomByRoomType_Id(this.id);
     });
     this.adminService
       .getAdminByNoAdmin(this.authService.getUsername())
@@ -60,6 +58,18 @@ export class RoomsComponent implements OnInit {
         },
         error: (error) => {},
       });
+  }
+  getAllRoomByRoomType_Id(id: number) {
+    this.roomService.getAllRoomByRoomType_Id(id).subscribe({
+      next: (response: Room[]) => {
+        this.rooms = response;
+      },
+      error: (error) => {
+        if (error.error) {
+          this.errorMessage = 'Không có loại phòng này. Quay lại ';
+        }
+      },
+    });
   }
   handleViewListStudents(numberRoom: number) {
     this.contractService
@@ -114,9 +124,35 @@ export class RoomsComponent implements OnInit {
   getRoomId(r: Room) {
     this.roomId = r.id;
   }
+  createRoom() {
+    const r = {
+      gender: this.room.gender,
+      numberRoom: this.room.numberRoom,
+      roomType: {
+        id: this.id,
+      },
+    };
+    if (this.room.gender == null || this.room.numberRoom == 0) {
+      Swal.fire('Có lỗi !', 'Vui lòng nhập đầy đủ thông tin', 'error');
+      return;
+    }
+
+    this.roomService.createRoom(r).subscribe({
+      next: (response: void) => {
+        Swal.fire('Thành công', 'Thêm phòng thành công', 'success');
+
+        this.room.gender = null;
+        this.room.numberRoom = 0;
+        this.getAllRoomByRoomType_Id(this.id);
+      },
+      error: (error) => {
+        Swal.fire('Thất bại', error.error.message, 'error');
+      },
+    });
+  }
   updateEnable(r: Room) {
     r.enable = !r.enable;
-    this.roomService.updateRoom(r.id, r).subscribe({
+    this.roomService.updateRoom(r.id!, r).subscribe({
       next: (response: void) => {
         Swal.fire('Thành công', 'Bạn đã cập nhật thành công', 'success');
       },

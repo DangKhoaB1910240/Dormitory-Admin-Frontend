@@ -16,6 +16,7 @@ import { StatisticalComponent } from './statistical/statistical.component';
 import { ServiceComponent } from './service/service.component';
 import { InformationComponent } from './information/information.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AddRoomTypeComponent } from './add-room-type/add-room-type.component';
 const routes: Routes = [
   {
     path: '',
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'service', component: ServiceComponent },
       { path: 'information', component: InformationComponent },
       { path: 'password', component: ChangePasswordComponent },
+      { path: 'add-room-type', component: AddRoomTypeComponent },
       { path: '', redirectTo: 'contract', pathMatch: 'full' },
       // Thêm các đường dẫn cho các trang khác ở đây
     ],

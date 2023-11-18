@@ -89,5 +89,23 @@ export class RoomtypeService {
       )
     );
   }
+  addRoomTypeWithImages(file: File, roomType: RoomType): Observable<void> {
+    const formData = new FormData();
+
+    // Append other fields
+    formData.append('name', roomType.name);
+    formData.append('maxQuantity', roomType.maxQuantity.toString());
+    formData.append('price', roomType.price.toString());
+    formData.append('isAirConditioned', roomType.isAirConditioned!.toString());
+    formData.append('isCooked', roomType.isCooked!.toString());
+    formData.append('images', file, file.name);
+    // Append each image blob
+
+    return this.http.post<void>(
+      this.getFullUrl(`api/v1/roomtype/add`),
+      formData
+    );
+  }
+
   //--------------Hết bộ lọc
 }

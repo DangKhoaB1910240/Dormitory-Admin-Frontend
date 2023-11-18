@@ -1,8 +1,8 @@
 export class Image {
   constructor(
-    public id: number,
+    public id: number | null,
     public name: string,
     public type: string,
-    public imageData: Blob //
+    public imageData: Blob | null //
   ) {}
 }

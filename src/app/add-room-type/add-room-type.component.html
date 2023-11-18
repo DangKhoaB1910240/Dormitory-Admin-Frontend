@@ -1,0 +1,97 @@
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+
+    <div class="container rounded bg-white mt-5 mb-5">
+      <div class="row">
+        <div class="col-md-2 border-right"></div>
+        <div class="col-md-10">
+          <div class="p-3 py-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="text-right">Thêm loại phòng</h4>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <label class="labels">Tên loại phòng</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Ví dụ: A1, A2, A3"
+                  [(ngModel)]="roomType.name"
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Số lượng sinh viên tối đa</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập số lượng > 1 && <=8"
+                  [(ngModel)]="roomType.maxQuantity"
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Giá</label
+                ><input
+                  [(ngModel)]="roomType.price"
+                  type="number"
+                  class="form-control"
+                  placeholder="Nhập giá lớn hơn 0 và chia hết cho 1000"
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Có máy lạnh không ?</label><br /><input
+                  [(ngModel)]="roomType.isAirConditioned"
+                  type="radio"
+                  value="true"
+                  name="isAirConditioned"
+                />
+                Có
+                <input
+                  style="margin-left: 3%"
+                  [(ngModel)]="roomType.isAirConditioned"
+                  type="radio"
+                  value="false"
+                  name="isAirConditioned"
+                />
+                Không
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Cho phép nấu ăn không ?</label><br />
+                <input
+                  type="radio"
+                  value="true"
+                  [(ngModel)]="roomType.isCooked"
+                  name="isCooked"
+                />
+                Có
+                <input
+                  style="margin-left: 3%"
+                  type="radio"
+                  [(ngModel)]="roomType.isCooked"
+                  name="isCooked"
+                  value="false"
+                />
+                Không
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Hình ảnh</label
+                ><input
+                  type="file"
+                  #fileInput
+                  class="form-control"
+                  (change)="handleFileInput($event)"
+                />
+              </div>
+              <div class="col-md-12">
+                <button (click)="submitForm()" class="btn btn-primary mt-3">
+                  Thêm Phòng
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

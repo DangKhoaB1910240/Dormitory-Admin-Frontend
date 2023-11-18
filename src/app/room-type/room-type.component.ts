@@ -1,8 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { RoomtypeService } from '../Services/roomtype/roomtype.service';
 import { RoomType } from '../Models/roomtype/room-type';
 import { ImageService } from '../Services/image/image.service';
 import Swal from 'sweetalert2';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-room-type',
@@ -25,21 +31,44 @@ export class RoomTypeComponent implements OnInit {
   }
 
   getAllRoomType(): void {
+    // this.roomListService.getAllRoomType().subscribe({
+    //   next: (response: any) => {
+    //     this.listRoomType = response;
+    //     this.listRoomType.map((roomType) => {
+    //       this.imageService
+    //         .getImage(roomType.images[0].name)
+    //         .subscribe((response) => {
+    //           this.displayImage(response.body!);
+    //           this.imageUrls.push(this.imageUrl);
+    //         });
+    //     });
+    //   },
+    //   error: (error) => {
+    //     if (error.status === 401) {
+    //     }
+    //   },
+    // });
+    //
     this.roomListService.getAllRoomType().subscribe({
       next: (response: any) => {
         this.listRoomType = response;
-        this.detect.detectChanges();
-        this.listRoomType.map((roomType) => {
-          this.imageService
-            .getImage(roomType.images[0].name)
-            .subscribe((response) => {
-              this.imageUrls.push(this.imageUrl);
-              this.displayImage(response.body!);
-            });
+
+        // Create an array of observables for image requests
+        const imageRequests = this.listRoomType.map((roomType) =>
+          this.imageService.getImage(roomType.images[0].name)
+        );
+
+        // Use forkJoin to wait for all image requests to complete
+        forkJoin(imageRequests).subscribe((responses: any[]) => {
+          responses.forEach((response) => {
+            this.displayImage(response.body!);
+            this.imageUrls.push(this.imageUrl);
+          });
         });
       },
       error: (error) => {
         if (error.status === 401) {
+          // Handle 401 error
         }
       },
     });
@@ -48,19 +77,20 @@ export class RoomTypeComponent implements OnInit {
     this.imageUrl = URL.createObjectURL(imageData);
     // Sử dụng imageUrl để hiển thị ảnh trong template của bạn
   }
-  updateEnable(r: RoomType) {
-    r.enable = !r.enable;
-    this.roomListService.updateRoomType(r.id, r).subscribe({
-      next: (response: any) => {
-        Swal.fire('Thành công', 'Bạn đã cập nhật thành công', 'success');
-        this.getAllRoomType();
-      },
-      error: (error) => {
-        Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
-      },
-    });
-  }
+
   changePrice() {
     this.showPrice = false;
+  }
+  updateEnable(r: RoomType) {
+    r.enable = !r.enable;
+    if (r.id)
+      this.roomListService.updateRoomType(r.id, r).subscribe({
+        next: (response: any) => {
+          Swal.fire('Thành công', 'Bạn đã cập nhật thành công', 'success');
+        },
+        error: (error) => {
+          Swal.fire('Có lỗi xảy ra', error.error.message, 'error');
+        },
+      });
   }
 }

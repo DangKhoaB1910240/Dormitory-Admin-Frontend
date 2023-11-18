@@ -20,4 +20,7 @@ export class RoomService {
   updateRoom(id: number, r: Room): Observable<void> {
     return this.http.patch<void>(this.getFullUrl(`api/v1/room/${id}`), r);
   }
+  createRoom(room: any): Observable<void> {
+    return this.http.post<void>(this.getFullUrl(`api/v1/room`), room);
+  }
 }

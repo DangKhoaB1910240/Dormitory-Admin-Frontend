@@ -1,0 +1,6 @@
+.text-muted:hover {
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+  text-decoration: underline;
+}

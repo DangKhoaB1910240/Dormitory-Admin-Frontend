@@ -2,9 +2,6 @@
   <!-- Begin Page Content -->
   <div class="container-fluid">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Danh sách loại phòng</h1>
-    </div>
 
     <!-- Content Row -->
 
@@ -12,6 +9,39 @@
       <!-- Area Chart -->
       <div class="col-xl-12 col-lg-12">
         <div class="card shadow mb-4">
+          <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          >
+            <h6 class="m-0 font-weight-bold text-primary">
+              QUẢN LÝ LOẠI PHÒNG
+            </h6>
+            <div class="dropdown no-arrow">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                aria-labelledby="dropdownMenuLink"
+              >
+                <div class="dropdown-header">Dropdown Header:</div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" routerLink="/add-room-type">
+            <div class="text-muted">Thêm loại phòng</div>
+          </div>
           <!--Modal: modalPush-->
           <table
             id="example"
@@ -69,19 +99,6 @@
                 </td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr>
-                <th>STT</th>
-                <th>Loại phòng</th>
-                <th>Máy lạnh</th>
-                <th>Nấu ăn</th>
-                <th>Số lượng tối đa</th>
-                <th>Giá</th>
-                <th>Hình ảnh</th>
-                <th>Hoạt động</th>
-                <th></th>
-              </tr>
-            </tfoot>
           </table>
         </div>
       </div>

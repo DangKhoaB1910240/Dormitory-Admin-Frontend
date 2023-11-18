@@ -26,6 +26,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { ServiceComponent } from './service/service.component';
 import { InformationComponent } from './information/information.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AddRoomTypeComponent } from './add-room-type/add-room-type.component';
+import { ItemComponent } from './room-type/item/item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ServiceComponent,
     InformationComponent,
     ChangePasswordComponent,
+    AddRoomTypeComponent,
+    ItemComponent,
   ],
   imports: [
     BrowserModule,
