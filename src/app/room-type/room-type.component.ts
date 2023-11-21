@@ -52,7 +52,7 @@ export class RoomTypeComponent implements OnInit {
     this.roomListService.getAllRoomType().subscribe({
       next: (response: any) => {
         this.listRoomType = response;
-
+        console.log(response);
         // Create an array of observables for image requests
         const imageRequests = this.listRoomType.map((roomType) =>
           this.imageService.getImage(roomType.images[0].name)

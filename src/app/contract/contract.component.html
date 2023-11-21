@@ -3,9 +3,7 @@
   <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">
-        Danh sách hợp đồng sinh viên ở ký túc xá
-      </h1>
+      <h1 class="h3 mb-0 text-gray-800">HỢP ĐỒNG KÝ TÚC XÁ</h1>
     </div>
     <div class="mb-3">
       <form>
@@ -87,6 +85,7 @@
       <div class="col-xl-12 col-lg-12">
         <div class="card shadow mb-4">
           <!--Modal: modalPush-->
+
           <table
             id="example"
             class="table text-left text-center"
@@ -118,23 +117,53 @@
                 <td>{{ c.gender == 1 ? "Nam" : "Nữ" }}</td>
                 <td>{{ c.roomType }}</td>
                 <td>{{ c.numberRoom }}</td>
+                <td
+                  *ngIf="c.status == 0"
+                  style="font-weight: bold"
+                  class="text-warning"
+                >
+                  CHƯA THANH TOÁN
+                </td>
+                <td
+                  *ngIf="c.status == 1"
+                  style="font-weight: bold"
+                  class="text-success"
+                >
+                  ĐÃ THANH TOÁN
+                </td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr>
-                <th>STT</th>
-                <th>MSSV</th>
-                <th>Họ tên</th>
-                <th>Ngành</th>
-                <th>Lớp</th>
-                <th>Email</th>
-                <th>SĐT</th>
-                <th>Giới tính</th>
-                <th>Loại phòng</th>
-                <th>Phòng</th>
-              </tr>
-            </tfoot>
           </table>
+          <div class="text-right mr-3">
+            <div>
+              <span style="font-weight: bold">Tổng tiền: </span
+              >{{ totalPrice | number }}đ
+            </div>
+            <div>
+              <span style="font-weight: bold">Đã thu: </span
+              >{{ currentPrice | number }}đ
+            </div>
+            <div>
+              <span style="font-weight: bold">Còn nợ: </span
+              >{{ unpayPrice | number }}đ
+            </div>
+          </div>
+          <ng-container *ngIf="totalElements && limit">
+            <app-pagination
+              [currentPage]="currentPage"
+              [limit]="limit"
+              [total]="totalElements"
+              (changePage)="changePage($event)"
+            ></app-pagination>
+          </ng-container>
+        </div>
+      </div>
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">DANH SÁCH ĐEN</h1>
+      </div>
+      <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+          <app-blacklist></app-blacklist>
         </div>
       </div>
     </div>

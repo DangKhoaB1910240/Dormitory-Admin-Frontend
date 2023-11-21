@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Contract } from 'src/app/Models/contract/contract';
 import { ContractResponseDto } from 'src/app/Models/contract/contract-response-dto';
+import { Page } from 'src/app/Models/page/page';
 import { Student } from 'src/app/Models/student/student';
 import { AppConfig } from 'src/app/config/AppConfig';
 
@@ -30,15 +31,19 @@ export class ContractService {
       )
     );
   }
+
   getContractsFromFilter(
     sesmester: number | null,
     schoolYear: string | null,
     major: string | null,
     numberStudent: string | null,
-    gender: number | null
-  ): Observable<ContractResponseDto[]> {
+    gender: number | null,
+    page: number = 0,
+    size: number = 6
+  ): Observable<Page<ContractResponseDto>> {
     // Tạo các tham số dựa trên các tham số đầu vào
     let params = new HttpParams();
+    params = params.set('page', page.toString()).set('size', size.toString());
     if (sesmester !== null) {
       params = params.set('sesmester', sesmester.toString());
     }
@@ -56,7 +61,7 @@ export class ContractService {
     }
 
     // Thực hiện HTTP GET request đến API
-    return this.http.get<ContractResponseDto[]>(
+    return this.http.get<Page<ContractResponseDto>>(
       this.getFullUrl(`api/v1/contract`),
       { params }
     );

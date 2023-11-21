@@ -1,0 +1,32 @@
+<table
+  id="example"
+  class="table text-left text-center"
+  style="font-size: small"
+>
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>MSSV</th>
+      <th>Họ tên</th>
+      <th>Vi phạm</th>
+      <th>Người thêm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let b of blackList; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ b.student.numberStudent }}</td>
+      <td>{{ b.student.name }}</td>
+      <td>{{ b.reason }}</td>
+      <td>{{ b.admin == null ? "Tự động" : b.admin.name }}</td>
+    </tr>
+  </tbody>
+</table>
+<ng-container *ngIf="totalElements && limit">
+  <app-pagination
+    [currentPage]="currentPage"
+    [limit]="limit"
+    [total]="totalElements"
+    (changePage)="changePage($event)"
+  ></app-pagination>
+</ng-container>

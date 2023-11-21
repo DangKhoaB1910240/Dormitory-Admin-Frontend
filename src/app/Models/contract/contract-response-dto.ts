@@ -1,5 +1,6 @@
 export class ContractResponseDto {
   constructor(
+    public id: number,
     public numberStudent: string,
     public name: string,
     public major: string,
@@ -8,6 +9,8 @@ export class ContractResponseDto {
     public phone: string,
     public gender: number,
     public roomType: string,
-    public numberRoom: number
+    public numberRoom: number,
+    public status: number,
+    public totalPrice: number
   ) {}
 }

@@ -3,6 +3,7 @@ import { ContractService } from '../Services/contract/contract.service';
 import { ContractResponseDto } from '../Models/contract/contract-response-dto';
 import { Sesmester } from '../Models/sesmester/sesmester';
 import { SesmesterService } from '../Services/sesmester/sesmester.service';
+import { Page } from '../Models/page/page';
 
 @Component({
   selector: 'app-contract',
@@ -20,6 +21,12 @@ export class ContractComponent implements OnInit {
   major: string | null = null;
   numberStudent: string | null = null;
   gender: number | null = null;
+  currentPage = 1;
+  totalElements!: number;
+  limit!: number;
+  totalPrice: number = 0;
+  currentPrice: number = 0;
+  unpayPrice: number = 0;
   // kết thúc Binding 2 chiều
   constructor(
     private contractService: ContractService,
@@ -37,8 +44,28 @@ export class ContractComponent implements OnInit {
     this.filterContracts();
     // Gọi API và lấy dữ liệu
   }
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.contractService
+      .getContractsFromFilter(
+        this.sesmester,
+        this.schoolYear,
+        this.major,
+        this.numberStudent,
+        this.gender,
+        this.currentPage - 1,
+        6
+      )
+      .subscribe({
+        next: (response: Page<ContractResponseDto>) => {
+          this.contracts = response.content;
+        },
+      });
+  }
   filterContracts() {
-    console.log(this.sesmester + ' ' + this.schoolYear);
+    this.totalPrice = 0;
+    this.currentPrice = 0;
+    this.unpayPrice = 0;
     this.contractService
       .getContractsFromFilter(
         this.sesmester,
@@ -48,8 +75,22 @@ export class ContractComponent implements OnInit {
         this.gender
       )
       .subscribe({
-        next: (response: ContractResponseDto[]) => {
-          this.contracts = response;
+        next: (response: Page<ContractResponseDto>) => {
+          this.contracts = response.content;
+          this.totalElements = response.totalElements;
+          this.limit = response.size;
+          this.contracts.forEach((c) => {
+            if (c.status != 2) {
+              this.totalPrice += c.totalPrice;
+            }
+            if (c.status == 1) {
+              this.currentPrice += c.totalPrice;
+            }
+            if (c.status == 0) {
+              this.unpayPrice += c.totalPrice;
+            }
+          });
+          this.detect.detectChanges();
           if (
             this.schoolYear == null &&
             this.sesmester == null &&
@@ -71,6 +112,7 @@ export class ContractComponent implements OnInit {
             );
           }
           this.detect.detectChanges();
+          this.changePage(this.currentPage);
         },
         error: (error) => {},
       });

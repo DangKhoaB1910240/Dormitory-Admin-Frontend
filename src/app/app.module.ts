@@ -28,6 +28,7 @@ import { InformationComponent } from './information/information.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AddRoomTypeComponent } from './add-room-type/add-room-type.component';
 import { ItemComponent } from './room-type/item/item.component';
+import { BlacklistComponent } from './blacklist/blacklist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { ItemComponent } from './room-type/item/item.component';
     ChangePasswordComponent,
     AddRoomTypeComponent,
     ItemComponent,
+    BlacklistComponent,
   ],
   imports: [
     BrowserModule,
