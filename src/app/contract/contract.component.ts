@@ -27,6 +27,8 @@ export class ContractComponent implements OnInit {
   totalPrice: number = 0;
   currentPrice: number = 0;
   unpayPrice: number = 0;
+  search: string = '';
+  studentStatus: number = 0;
   // kết thúc Binding 2 chiều
   constructor(
     private contractService: ContractService,
@@ -91,6 +93,7 @@ export class ContractComponent implements OnInit {
             }
           });
           this.detect.detectChanges();
+          this.search = '';
           if (
             this.schoolYear == null &&
             this.sesmester == null &&
@@ -134,5 +137,39 @@ export class ContractComponent implements OnInit {
       this.numberStudent = null;
     }
     this.filterContracts();
+  }
+  searchFilter() {
+    this.totalPrice = 0;
+    this.currentPrice = 0;
+    this.unpayPrice = 0;
+    console.log(this.search == '');
+    this.contractService.searchFilter(this.search).subscribe({
+      next: (response: Page<ContractResponseDto>) => {
+        this.contracts = response.content;
+
+        this.totalElements = response.totalElements;
+        this.limit = response.size;
+        this.contracts.forEach((c) => {
+          if (c.status != 2) {
+            this.totalPrice += c.totalPrice;
+          }
+          if (c.status == 1) {
+            this.currentPrice += c.totalPrice;
+          }
+          if (c.status == 0) {
+            this.unpayPrice += c.totalPrice;
+          }
+        });
+        this.sesmester = null;
+        this.gender = null;
+        this.schoolYear = null;
+        this.major = null;
+        this.numberStudent = null;
+      },
+      error: (error) => {},
+    });
+  }
+  updateContract() {
+    console.log(this.studentStatus);
   }
 }

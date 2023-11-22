@@ -78,6 +78,19 @@
           <div class="col-sm-6"></div>
         </div>
       </form>
+      <div class="box">
+        <form name="search">
+          <input
+            type="text"
+            class="input"
+            name="txt"
+            [(ngModel)]="search"
+            (input)="searchFilter()"
+            placeholder="Tìm kiếm bằng MSSV hoặc tên sinh viên"
+          />
+        </form>
+        <i class="fas fa-search"></i>
+      </div>
     </div>
 
     <div class="row">
@@ -103,6 +116,7 @@
                 <th>Giới tính</th>
                 <th>Loại phòng</th>
                 <th>Phòng</th>
+                <th>Trạng thái</th>
               </tr>
             </thead>
             <tbody>
@@ -131,6 +145,24 @@
                 >
                   ĐÃ THANH TOÁN
                 </td>
+                <!-- <td>
+                  <select
+                    name="student-status"
+                    class="form-control"
+                    [(ngModel)]="studentStatus"
+                    (ngModelChange)="updateContract()"
+                  >
+                    <option value="0" [selected]="c.studentStatus == 0">
+                      Bình thường
+                    </option>
+                    <option value="2" [selected]="c.studentStatus == 2">
+                      Thêm vào danh sách đen
+                    </option>
+                    <option value="1" [selected]="c.studentStatus == 1">
+                      Tốt nghiệp
+                    </option>
+                  </select>
+                </td> -->
               </tr>
             </tbody>
           </table>
@@ -158,12 +190,22 @@
           </ng-container>
         </div>
       </div>
-      <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">DANH SÁCH ĐEN</h1>
-      </div>
+    </div>
+    <div class="row">
       <div class="col-xl-6 col-lg-6">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">DANH SÁCH ĐEN</h1>
+        </div>
         <div class="card shadow mb-4">
           <app-blacklist></app-blacklist>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">SINH VIÊN ĐÃ TỐT NGHIỆP</h1>
+        </div>
+        <div class="card shadow mb-4">
+          <app-graduation></app-graduation>
         </div>
       </div>
     </div>

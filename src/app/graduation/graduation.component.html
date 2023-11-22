@@ -9,18 +9,20 @@
       <th>MSSV</th>
       <th>Họ tên</th>
       <th>Email</th>
-      <th>Vi phạm</th>
-      <th>Người thêm</th>
+      <th>SĐT</th>
+      <th>Ngành</th>
+      <th>Giới tính</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let b of blackList; index as i">
+    <tr *ngFor="let s of students; index as i">
       <td>{{ i + 1 }}</td>
-      <td>{{ b.student.numberStudent }}</td>
-      <td>{{ b.student.name }}</td>
-      <td>{{ b.student.email }}</td>
-      <td>{{ b.reason }}</td>
-      <td>{{ b.admin == null ? "Tự động" : b.admin.name }}</td>
+      <td>{{ s.numberStudent }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.email }}</td>
+      <td>{{ s.phone }}</td>
+      <td>{{ s.major }}</td>
+      <td>{{ s.gender == 1 ? "Nam" : "Nữ" }}</td>
     </tr>
   </tbody>
 </table>

@@ -66,4 +66,21 @@ export class ContractService {
       { params }
     );
   }
+  searchFilter(
+    search: string,
+    page: number = 0,
+    size: number = 6
+  ): Observable<Page<ContractResponseDto>> {
+    // Tạo các tham số dựa trên các tham số đầu vào
+    let params = new HttpParams();
+    params = params.set('page', page.toString()).set('size', size.toString());
+
+    params = params.set('search', search);
+
+    // Thực hiện HTTP GET request đến API
+    return this.http.get<Page<ContractResponseDto>>(
+      this.getFullUrl(`api/v1/contract/search`),
+      { params }
+    );
+  }
 }
