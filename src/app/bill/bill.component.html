@@ -185,14 +185,26 @@
                   </div>
                 </td>
                 <td>
-                  <a
-                    class="text-info"
-                    style="font-weight: bold; cursor: pointer"
+                  <button
+                    class=""
+                    class="glowing-button"
                     data-bs-toggle="modal"
                     data-bs-target="#myModal1"
+                    *ngIf="!b.status"
                     (click)="getBillId(b)"
-                    >Chỉnh sửa</a
                   >
+                    Chỉnh sửa
+                  </button>
+                </td>
+                <td>
+                  <button
+                    (click)="printPDF(b)"
+                    class="btn btn-secondary"
+                    ngxPrint
+                    [printSectionId]="'your-invoice-section'"
+                  >
+                    In hóa đơn
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -272,5 +284,214 @@
         <div class="text-center">Chưa có dữ liệu của tháng này</div>
       </ng-template>
     </div>
+  </div>
+</div>
+<div
+  id="your-invoice-section"
+  class="card"
+  style="
+    display: none;
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+  "
+>
+  <div
+    class="card-header"
+    style="
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px 10px 0 0;
+    "
+  >
+    <h4>Thông Báo Hóa Đơn Tiền Nước và Điện</h4>
+  </div>
+  <div class="card-body" style="padding: 20px">
+    <div>Tiền điện: 1.728đ/ Kw</div>
+    <div>Tiền nước: 5.973đ/ Khối</div>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px">
+      <thead>
+        <tr>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Loại phòng
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Phòng
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Chỉ số nước đầu
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Chỉ số nước cuối
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Chỉ số điện đầu
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Chỉ số điện cuối
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Tổng tiền
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Ngày lập
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Người lập
+          </th>
+          <th
+            style="
+              border: 1px solid #dee2e6;
+              padding: 10px;
+              text-align: center;
+              background-color: #007bff;
+              color: white;
+            "
+          >
+            Người cập nhật
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="billPrintPDF">
+        <tr>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.roomType }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.numberRoom }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.initialWater }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.finalWater }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.initialElectricity }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.finalElectricity }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.price | number }}đ
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.createdDate | date : "dd-MM-yyyy" }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            {{ billPrintPDF.admin.name }}
+          </td>
+          <td
+            style="border: 1px solid #dee2e6; padding: 10px; text-align: center"
+          >
+            <span *ngIf="billPrintPDF.admin2">
+              {{ billPrintPDF.admin2.name }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="color: #6c757d">
+      Hóa đơn này phải thanh toán trước ngày cuối cũng trong tháng được thông
+      báo. Vui lòng lên hệ thống quản lý thanh toán online.
+    </p>
+    <p style="color: red; font-weight: bold">
+      Sẽ khóa điện nước nếu trễ hạn đóng tiền điện nước.
+    </p>
   </div>
 </div>

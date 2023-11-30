@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Admin } from 'src/app/Models/admin/admin';
 import { Student } from 'src/app/Models/student/student';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/Services/auth/auth.service';
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainLayoutComponent implements OnInit {
   constructor(

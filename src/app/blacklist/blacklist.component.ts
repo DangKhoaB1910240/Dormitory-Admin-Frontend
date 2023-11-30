@@ -24,9 +24,21 @@ export class BlacklistComponent implements OnInit {
       },
       error: (error) => {},
     });
+    this.blackListService.blacklistUpdated$.subscribe(() => {
+      // Cập nhật lại danh sách đen khi được thông báo
+      this.refreshBlacklist();
+    });
   }
   changePage(page: number): void {
     this.currentPage = page;
+    this.blackListService.getAllBlackList(this.currentPage - 1, 6).subscribe({
+      next: (response: Page<Blacklist>) => {
+        this.blackList = response.content;
+      },
+    });
+  }
+  private refreshBlacklist() {
+    // Gọi service để lấy dữ liệu mới cho danh sách đen
     this.blackListService.getAllBlackList(this.currentPage - 1, 6).subscribe({
       next: (response: Page<Blacklist>) => {
         this.blackList = response.content;

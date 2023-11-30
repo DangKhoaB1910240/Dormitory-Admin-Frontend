@@ -1,1 +1,191 @@
-<p>register-service works!</p>
+<div id="content">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">DỊCH VỤ SINH VIÊN ĐÃ ĐĂNG KÝ</h1>
+    </div>
+    <div class="mb-3">
+      <form>
+        <div class="row">
+          <div class="col-sm-2">
+            Học kỳ:
+            <select
+              class="form-select"
+              name="sesmester"
+              id="sesmester"
+              [(ngModel)]="sesmester"
+              (change)="filterRegister()"
+            >
+              <option value="0">Tất cả</option>
+              <option *ngFor="let s of sesmesters" [value]="s.sesmester">
+                {{ s.sesmester }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Năm học:
+            <select
+              class="form-select"
+              name="schoolYear"
+              id="schoolYear"
+              [(ngModel)]="schoolYear"
+              (change)="filterRegister()"
+            >
+              <option value="all">Tất cả</option>
+              <option *ngFor="let s of sesmesters" [value]="s.schoolYear">
+                {{ s.schoolYear }}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Ngành:
+            <select
+              class="form-select"
+              name="major"
+              id="major"
+              [(ngModel)]="major"
+              (change)="filterRegister()"
+            >
+              <option value="all">Tất cả</option>
+              <option *ngFor="let m of majors" [value]="m">{{ m }}</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Khóa:
+            <select
+              class="form-select"
+              name="numberStudent"
+              id="numberStudent"
+              [(ngModel)]="numberStudent"
+              (change)="filterRegister()"
+            >
+              <option value="all">Tất cả</option>
+              <option *ngFor="let n of numberStudents" [value]="n">
+                {{ n }}....
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            Giới tính:
+            <select
+              class="form-select"
+              name="gender"
+              id="gender"
+              [(ngModel)]="gender"
+              (change)="filterRegister()"
+            >
+              <option value="2">Tất cả</option>
+              <option value="1">Nam</option>
+              <option value="0">Nữ</option>
+            </select>
+          </div>
+          <div class="col-sm-6"></div>
+        </div>
+      </form>
+      <div class="box">
+        <form name="search">
+          <input
+            type="text"
+            class="input"
+            name="txt"
+            [(ngModel)]="search"
+            (input)="searchFilter()"
+            placeholder="Tìm kiếm bằng MSSV hoặc tên sinh viên"
+          />
+        </form>
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Area Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!--Modal: modalPush-->
+
+          <table
+            id="example"
+            class="table text-left text-center"
+            style="font-size: small"
+          >
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>MSSV</th>
+                <th>Họ tên</th>
+                <th>Ngành</th>
+                <th>Lớp</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Giới tính</th>
+                <th>Dịch vụ</th>
+                <th>Biển số (xe máy)</th>
+                <th>Gía</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of registers; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ r.student.numberStudent }}</td>
+                <td>{{ r.student.name }}</td>
+                <td>{{ r.student.major }}</td>
+                <td>{{ r.student.classroom }}</td>
+                <td>{{ r.student.email }}</td>
+                <td>{{ r.student.phone }}</td>
+                <td>{{ r.student.gender == 1 ? "Nam" : "Nữ" }}</td>
+                <td>{{ r.service.name }}</td>
+                <td>{{ r.motorbikeLicensePlate }}</td>
+                <td>{{ r.price | number }}đ</td>
+                <td *ngIf="r.status == 0">
+                  <div
+                    class="p-2 bg-danger bg-opacity-5 text-white"
+                    style="font-weight: bold"
+                  >
+                    CHƯA THANH TOÁN
+                  </div>
+                </td>
+                <td *ngIf="r.status == 1">
+                  <div
+                    style="
+                      background-color: green;
+                      color: white;
+                      font-weight: BOLD;
+                    "
+                    class="p-2"
+                  >
+                    ĐÃ THANH TOÁN
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="text-right mr-3">
+            <div>
+              <span style="font-weight: bold">Tổng tiền: </span
+              >{{ totalPrice | number }}đ
+            </div>
+            <div>
+              <span style="font-weight: bold">Đã thu: </span
+              >{{ currentPrice | number }}đ
+            </div>
+            <div>
+              <span style="font-weight: bold">Còn nợ: </span
+              >{{ unpayPrice | number }}đ
+            </div>
+          </div>
+          <ng-container *ngIf="totalElements && limit">
+            <app-pagination
+              [currentPage]="currentPage"
+              [limit]="limit"
+              [total]="totalElements"
+              (changePage)="changePage($event)"
+            ></app-pagination>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

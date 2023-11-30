@@ -39,8 +39,12 @@
               </div>
             </div>
           </div>
-          <div class="card-body" routerLink="/add-room-type">
-            <div class="text-muted">Thêm loại phòng</div>
+          <div
+            class="card-body"
+            routerLink="/add-room-type"
+            style="cursor: pointer"
+          >
+            <img src="../../assets/plus.png" alt="" />
           </div>
           <!--Modal: modalPush-->
           <table
@@ -63,38 +67,51 @@
             </thead>
             <tbody *ngIf="listRoomType.length != 0">
               <tr *ngFor="let r of listRoomType; index as i">
-                <td>{{ i + 1 }}</td>
-                <td>{{ r.name }}</td>
-                <td>{{ !r.isAirConditioned ? "Không" : "Có" }}</td>
-                <td>{{ !r.isCooked ? "Không" : "Cho phép" }}</td>
-                <td>{{ r.maxQuantity }}</td>
-                <td>
+                <td class="align-middle">{{ i + 1 }}</td>
+                <td class="align-middle">{{ r.name }}</td>
+                <td class="align-middle">
+                  {{ !r.isAirConditioned ? "Không" : "Có" }}
+                </td>
+                <td class="align-middle">
+                  {{ !r.isCooked ? "Không" : "Cho phép" }}
+                </td>
+                <td class="align-middle">{{ r.maxQuantity }}</td>
+                <td class="align-middle">
                   <div *ngIf="showPrice">{{ r.price | number }}đ/ tháng</div>
                   <div *ngIf="!showPrice">
                     <input type="text" [value]="r.price" />
                   </div>
                 </td>
-                <td>
+                <td class="align-middle">
                   <img
                     style="height: 222px; width: 350px"
-                    [src]="imageUrls[i + 1]"
+                    [src]="imageUrls[i]"
                     alt=""
                   />
                 </td>
-                <td>
-                  <select (change)="updateEnable(r)">
-                    <option value="Còn" [selected]="r.enable">Còn</option>
-                    <option value="Không" [selected]="!r.enable">Không</option>
+                <td class="align-middle">
+                  <select (change)="updateEnable(r)" class="form-select">
+                    <option value="Còn" [selected]="r.enable == true">
+                      Còn
+                    </option>
+                    <option value="Không" [selected]="r.enable == false">
+                      Không
+                    </option>
                   </select>
                 </td>
-                <td>
+                <td class="align-middle">
                   <div>
-                    <a
-                      style="cursor: pointer; font-weight: bold"
-                      class="text-info"
+                    <button
+                      class="glowing-button"
                       [routerLink]="['/rooms', r.id]"
-                      >Chi tiết</a
                     >
+                      Chi tiết
+                    </button>
+                    <!-- <a
+                      style="cursor: pointer; font-weight: bold"
+
+                      ></a
+                    > -->
                   </div>
                 </td>
               </tr>

@@ -8,7 +8,8 @@ import { RoomtypeService } from '../Services/roomtype/roomtype.service';
 import { RoomType } from '../Models/roomtype/room-type';
 import { ImageService } from '../Services/image/image.service';
 import Swal from 'sweetalert2';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { Room } from '../Models/room/room';
 
 @Component({
   selector: 'app-room-type',
@@ -21,6 +22,7 @@ export class RoomTypeComponent implements OnInit {
   imageUrl: string = '';
   selectedEnable!: number;
   showPrice: boolean = true;
+  index: number = 0;
   constructor(
     private roomListService: RoomtypeService,
     private imageService: ImageService,
@@ -31,39 +33,30 @@ export class RoomTypeComponent implements OnInit {
   }
 
   getAllRoomType(): void {
-    // this.roomListService.getAllRoomType().subscribe({
-    //   next: (response: any) => {
-    //     this.listRoomType = response;
-    //     this.listRoomType.map((roomType) => {
-    //       this.imageService
-    //         .getImage(roomType.images[0].name)
-    //         .subscribe((response) => {
-    //           this.displayImage(response.body!);
-    //           this.imageUrls.push(this.imageUrl);
-    //         });
-    //     });
-    //   },
-    //   error: (error) => {
-    //     if (error.status === 401) {
-    //     }
-    //   },
-    // });
-    //
     this.roomListService.getAllRoomType().subscribe({
-      next: (response: any) => {
+      next: (response: RoomType[]) => {
         this.listRoomType = response;
-        console.log(response);
+
         // Create an array of observables for image requests
-        const imageRequests = this.listRoomType.map((roomType) =>
-          this.imageService.getImage(roomType.images[0].name)
-        );
+        const imageRequests = response.map((roomType) => {
+          if (roomType && roomType.images.length > 0) {
+            return this.imageService.getImage(roomType.images[0].name);
+          } else {
+            // Return an observable with null if no image is present
+            return of(null);
+          }
+        });
 
         // Use forkJoin to wait for all image requests to complete
         forkJoin(imageRequests).subscribe((responses: any[]) => {
-          responses.forEach((response) => {
-            this.displayImage(response.body!);
-            this.imageUrls.push(this.imageUrl);
+          responses.forEach((response, index) => {
+            if (response && response.body) {
+              this.imageUrl = URL.createObjectURL(response.body);
+              this.imageUrls[index] = this.imageUrl;
+            }
           });
+          // Nguyên tắc này đảm bảo rằng imageUrls đã được đặt đúng trước khi hiển thị trong template.
+          this.detect.detectChanges();
         });
       },
       error: (error) => {
@@ -73,10 +66,10 @@ export class RoomTypeComponent implements OnInit {
       },
     });
   }
-  displayImage(imageData: Blob) {
-    this.imageUrl = URL.createObjectURL(imageData);
-    // Sử dụng imageUrl để hiển thị ảnh trong template của bạn
-  }
+  // displayImage(imageData: Blob, index: number) {
+
+  //   // Sử dụng imageUrl để hiển thị ảnh trong template của bạn
+  // }
 
   changePrice() {
     this.showPrice = false;

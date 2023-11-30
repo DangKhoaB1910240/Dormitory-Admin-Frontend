@@ -26,9 +26,23 @@ export class GraduationComponent implements OnInit {
       },
       error: (error) => {},
     });
+    this.studentService.studentUpdated$.subscribe(() => {
+      // Cập nhật lại danh sách đen khi được thông báo
+      this.refreshStudent();
+    });
   }
   changePage(page: number): void {
     this.currentPage = page;
+    this.studentService
+      .getStudentGratuation(this.currentPage - 1, 6)
+      .subscribe({
+        next: (response: Page<Student>) => {
+          this.students = response.content;
+        },
+      });
+  }
+  private refreshStudent() {
+    // Gọi service để lấy dữ liệu mới cho danh sách đen
     this.studentService
       .getStudentGratuation(this.currentPage - 1, 6)
       .subscribe({

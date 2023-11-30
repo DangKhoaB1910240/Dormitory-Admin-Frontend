@@ -5,12 +5,116 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">HỢP ĐỒNG KÝ TÚC XÁ</h1>
     </div>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">THÊM HỌC KỲ MỚI</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <select
+              name="reason"
+              id="reason"
+              [(ngModel)]="s.sesmester"
+              class="form-select"
+            >
+              <option value="0">Chọn học kỳ</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+            <select
+              name="reason"
+              id="reason"
+              [(ngModel)]="s.schoolYear"
+              class="form-select mt-3"
+            >
+              <option value="">Chọn năm học</option>
+              <option value="2023-2024">2023-2024</option>
+              <option value="2024-2025">2024-2025</option>
+              <option value="2025-2026">2025-2026</option>
+            </select>
+            <div class="mt-3">
+              <label for="">Ngày bắt đầu</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="s.startDate"
+              />
+            </div>
+            <div class="mt-3">
+              <label for="">Ngày kết thúc</label>
+              <input type="date" class="form-control" [(ngModel)]="s.endDate" />
+            </div>
+            <div class="mt-3">
+              <label for="">Ngày bắt đầu đăng ký</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="s.registrationStartDate"
+              />
+            </div>
+            <div class="mt-3">
+              <label for="">Ngày kết thúc đăng ký</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="s.registrationEndDate"
+              />
+            </div>
+            <div class="mt-3">
+              <label for="">Số tuần nghĩ</label>
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="s.holidayWeek"
+              />
+            </div>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="createSesmester()"
+            >
+              Xác nhận
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="mb-3">
+      <div
+        class="text-info"
+        style="cursor: pointer"
+        data-bs-toggle="modal"
+        data-bs-target="#myModal1"
+      >
+        Tạo học kỳ mới
+      </div>
       <form>
         <div class="row">
           <div class="col-sm-2">
             Học kỳ:
             <select
+              class="form-select"
               name="sesmester"
               id="sesmester"
               [(ngModel)]="sesmester"
@@ -25,6 +129,7 @@
           <div class="col-sm-2">
             Năm học:
             <select
+              class="form-select"
               name="schoolYear"
               id="schoolYear"
               [(ngModel)]="schoolYear"
@@ -39,6 +144,7 @@
           <div class="col-sm-2">
             Ngành:
             <select
+              class="form-select"
               name="major"
               id="major"
               [(ngModel)]="major"
@@ -51,6 +157,7 @@
           <div class="col-sm-2">
             Khóa:
             <select
+              class="form-select"
               name="numberStudent"
               id="numberStudent"
               [(ngModel)]="numberStudent"
@@ -65,6 +172,7 @@
           <div class="col-sm-2">
             Giới tính:
             <select
+              class="form-select"
               name="gender"
               id="gender"
               [(ngModel)]="gender"
@@ -117,6 +225,8 @@
                 <th>Loại phòng</th>
                 <th>Phòng</th>
                 <th>Trạng thái</th>
+                <th>Vi phạm</th>
+                <th>Tốt nghiệp</th>
               </tr>
             </thead>
             <tbody>
@@ -131,41 +241,134 @@
                 <td>{{ c.gender == 1 ? "Nam" : "Nữ" }}</td>
                 <td>{{ c.roomType }}</td>
                 <td>{{ c.numberRoom }}</td>
-                <td
-                  *ngIf="c.status == 0"
-                  style="font-weight: bold"
-                  class="text-warning"
-                >
-                  CHƯA THANH TOÁN
-                </td>
-                <td
-                  *ngIf="c.status == 1"
-                  style="font-weight: bold"
-                  class="text-success"
-                >
-                  ĐÃ THANH TOÁN
-                </td>
-                <!-- <td>
-                  <select
-                    name="student-status"
-                    class="form-control"
-                    [(ngModel)]="studentStatus"
-                    (ngModelChange)="updateContract()"
+                <td *ngIf="c.status == 0">
+                  <div
+                    class="p-2 bg-danger bg-opacity-5 text-white"
+                    style="font-weight: bold"
                   >
-                    <option value="0" [selected]="c.studentStatus == 0">
-                      Bình thường
-                    </option>
-                    <option value="2" [selected]="c.studentStatus == 2">
-                      Thêm vào danh sách đen
-                    </option>
-                    <option value="1" [selected]="c.studentStatus == 1">
-                      Tốt nghiệp
-                    </option>
-                  </select>
-                </td> -->
+                    CHƯA THANH TOÁN
+                  </div>
+                </td>
+                <td *ngIf="c.status == 1">
+                  <div
+                    style="
+                      background-color: green;
+                      color: white;
+                      font-weight: BOLD;
+                    "
+                    class="p-2"
+                  >
+                    ĐÃ THANH TOÁN
+                  </div>
+                </td>
+                <td *ngIf="c.status == 3">
+                  <div
+                    style="
+                      background-color: black;
+                      color: white;
+                      font-weight: BOLD;
+                    "
+                    class="p-2"
+                  >
+                    THUỘC DANH SÁCH ĐEN
+                  </div>
+                </td>
+                <td>
+                  <button
+                    (click)="addToBlackList(c)"
+                    *ngIf="c.isCurrentSesmester && c.status != 3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal"
+                    class="glowing-button2"
+                  >
+                    Vi phạm
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="glowing-button"
+                    (click)="updateStudentStatus(c)"
+                    *ngIf="c.isCurrentSesmester && c.studentStatus != 1"
+                  >
+                    Xác nhận
+                  </button>
+                  <a
+                    *ngIf="c.studentStatus == 1"
+                    style="font-weight: bold"
+                    class="text-success"
+                    >TỐT NGHIỆP</a
+                  >
+                </td>
               </tr>
             </tbody>
           </table>
+          <!-- The Modal -->
+          <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">
+                    THÊM SINH VIÊN VI PHẠM VÀO DANH SÁCH ĐEN
+                  </h4>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                  ></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <select
+                    name="reason"
+                    id="reason"
+                    [(ngModel)]="reason"
+                    class="form-select"
+                  >
+                    <option value="">Vui lòng chọn lý do</option>
+                    <option value="Đánh nhau, gây rối trật tự">
+                      Đánh nhau, gây rối trật tự
+                    </option>
+                    <option value="Trộm cắp">Trộm cắp</option>
+                    <option value="Phòng bừa bộn quá lâu">
+                      Phòng bừa bộn quá lâu
+                    </option>
+                    <option value="Bài bạc, tệ nạn...">
+                      Bài bạc, tệ nạn...
+                    </option>
+                    <option value="Đi chơi về quá giờ quy định từ 2 lần">
+                      Đi chơi về quá giờ quy định từ 2 lần
+                    </option>
+                    <option
+                      value="Vô lễ, thiếu tôn trọng cán bộ trong ký túc xá"
+                    >
+                      Vô lễ, thiếu tôn trọng cán bộ trong ký túc xá
+                    </option>
+                    <option value="Phá hoại đồ đạc">Phá hoại đồ đạc</option>
+                  </select>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    (click)="addToBlackList2()"
+                  >
+                    Xác nhận
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="text-right mr-3">
             <div>
               <span style="font-weight: bold">Tổng tiền: </span

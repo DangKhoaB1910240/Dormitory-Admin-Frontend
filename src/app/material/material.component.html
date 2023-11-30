@@ -93,16 +93,16 @@
                 <td>{{ f.quantity }}</td>
                 <td>{{ f.sendDate | date : "dd-MM-yyyy" }}</td>
                 <td>
-                  <div
-                    *ngIf="f.status == 0"
-                    class="text-success"
-                    style="font-weight: bold; cursor: pointer"
+                  <button
+                    class="glowing-button"
                     data-bs-toggle="modal"
                     data-bs-target="#myModal"
                     (click)="accept(f)"
+                    *ngIf="f.status == 0"
                   >
                     Xác nhận
-                  </div>
+                  </button>
+
                   <div class="text-center" *ngIf="f.status == 1">
                     <div
                       style="

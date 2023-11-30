@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+
+p {
+  margin: auto;
+}
+
+.large {
+  font-size: 3rem;
+}
+
+.small {
+  font-size: 1rem;
+}
+
+.rise {
+  text-shadow: -0.01em -0.01em 0.01em #000;
+  animation: rise 2s ease-in-out 0.5s forwards;
+}
+
+@keyframes rise {
+  to {
+    text-shadow: 0em 0.01em #ff5, 0em 0.02em #ff5, 0em 0.02em 0.03em #ff5,
+      -0.01em 0.01em #333, -0.02em 0.02em #333, -0.03em 0.03em #333,
+      -0.04em 0.04em #333, -0.01em -0.01em 0.03em #000,
+      -0.02em -0.02em 0.03em #000, -0.03em -0.03em 0.03em #000;
+    transform: translateY(-0.025em) translateX(0.04em);
+  }
+}
+
+.outline {
+  background-clip: text;
+  color: #ffdd40;
+  animation: outline 1s ease-in-out 1.5s forwards;
+}
+
+@keyframes outline {
+  from {
+    text-shadow: 0em -7em 10em #fff;
+  }
+  to {
+    text-shadow: 0 0.02em #fff, 0.02em 0 #fff, -0.02em 0 #fff, 0 -0.02em #fff;
+  }
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+.glowing-button {
+  padding: 10px 20px;
+  font-size: 13px;
+  background: linear-gradient(45deg, rgb(59, 99, 126), #0b3142);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-origin: center;
+  font-weight: bold;
+}
+.glowing-button:hover {
+  animation: glowing 1.5s infinite;
+}
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #2d97df, 0 0 20px #309ae0;
+  }
+
+  50% {
+    box-shadow: 0 0 50px #2f94d8, 0 0 40px #3098dd;
+  }
+
+  100% {
+    box-shadow: 0 0 5px #319ae0, 0 0 20px #2f98dd;
+  }
+}
+
+/* 2 */
+.glowing-button2 {
+  padding: 10px 20px;
+  font-size: 13px;
+  background: linear-gradient(45deg, #ffd700, #ffcc00); /* Yellow gradient */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-origin: center;
+  font-weight: bold;
+}
+
+.glowing-button2:hover {
+  animation: glowing2 1.5s infinite;
+}
+
+@keyframes glowing2 {
+  0% {
+    box-shadow: 0 0 5px #ffd700, 0 0 20px #ffcc00;
+  }
+
+  50% {
+    box-shadow: 0 0 50px #ffcc00, 0 0 40px #ffd700;
+  }
+
+  100% {
+    box-shadow: 0 0 5px #ffcc00, 0 0 20px #ffd700;
+  }
+}

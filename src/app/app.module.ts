@@ -30,6 +30,7 @@ import { AddRoomTypeComponent } from './add-room-type/add-room-type.component';
 import { ItemComponent } from './room-type/item/item.component';
 import { BlacklistComponent } from './blacklist/blacklist.component';
 import { GraduationComponent } from './graduation/graduation.component';
+import { NgxPrintModule } from 'ngx-print';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +67,7 @@ import { GraduationComponent } from './graduation/graduation.component';
     BrowserAnimationsModule,
     FormsModule,
     NgxSpinnerModule,
+    NgxPrintModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

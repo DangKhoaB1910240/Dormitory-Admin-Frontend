@@ -12,9 +12,11 @@
             <img
               class="rounded-circle mt-5"
               width="180px"
-              src="https://scontent.fvca1-4.fna.fbcdn.net/v/t39.30808-6/368603762_3550623235253331_7915607461977158176_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=6_32qDQYONMAX-lmhG-&_nc_ht=scontent.fvca1-4.fna&oh=00_AfCsg7rOlLu6PsIsWoFTZRxLwi0yCMMW7uBZotBVWoxOsg&oe=655AD260"
-            /><span class="font-weight-bold">{{ admin.name }}</span
-            ><span class="text-black-50">{{ admin.email }}</span
+              src="https://scontent.fvca1-4.fna.fbcdn.net/v/t39.30808-6/368603762_3550623235253331_7915607461977158176_n.jpg?stp=dst-jpg_p843x403&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEbSpu3tnvpQVTv-J84KxRwKVSkbCXvvyMpVKRsJe-_I-3_PnRVLbIgRgz2M3WzWhXeF_NaFo45of9jXMnP3rjA&_nc_ohc=6OETRvh4lC0AX-nS8Rm&_nc_ht=scontent.fvca1-4.fna&oh=00_AfCGMCcN6VYQ625Yrv41-kGmdfJyaH9oh60QA64-Dc33ag&oe=656AA460"
+            /><span class="font-weight-bold" *ngIf="admin">{{
+              admin.name
+            }}</span
+            ><span class="text-black-50" *ngIf="admin">{{ admin.email }}</span
             ><span class="change-password" routerLink="/password"
               >Đổi mật khẩu
             </span>

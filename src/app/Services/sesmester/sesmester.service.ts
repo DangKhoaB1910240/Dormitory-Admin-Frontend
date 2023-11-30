@@ -23,4 +23,7 @@ export class SesmesterService {
   getAllSesmester(): Observable<Sesmester[]> {
     return this.http.get<Sesmester[]>(this.getFullUrl(`api/v1/sesmester`));
   }
+  createSesmester(s: Sesmester): Observable<void> {
+    return this.http.post<void>(this.getFullUrl(`api/v1/sesmester`), s);
+  }
 }

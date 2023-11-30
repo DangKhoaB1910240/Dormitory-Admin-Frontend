@@ -2,14 +2,117 @@
   <!-- Begin Page Content -->
   <div class="container-fluid">
     <!-- Page Heading -->
-
-    <div class="container rounded bg-white mt-5 mb-5">
+    <!-- das -->
+    <div class="hi">
+      <div class="container">
+        <div class="text">THÊM LOẠI PHÒNG</div>
+        <form>
+          <div class="form-row">
+            <div class="input-data">
+              <input
+                type="text"
+                required
+                name="name"
+                id="name"
+                [(ngModel)]="roomType.name"
+              />
+              <div class="underline"></div>
+              <label for="">Dãy</label>
+            </div>
+            <div class="input-data">
+              <input
+                type="number"
+                required
+                [(ngModel)]="roomType.maxQuantity"
+                name="quantity"
+                id="quantity"
+              />
+              <div class="underline"></div>
+              <label for="">Số lượng tối đa</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-data">
+              <input
+                type="number"
+                required
+                [(ngModel)]="roomType.price"
+                name="price"
+                id="price"
+              />
+              <div class="underline"></div>
+              <label for="">Giá (tính theo tháng)</label>
+            </div>
+            <div class="input-data">
+              <input
+                type="file"
+                #fileInput
+                (change)="handleFileInput($event)"
+                required
+              />
+              <div class="underline"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div style="margin: 0 20px">
+              <label class="labels">Cho phép nấu ăn không ?</label><br />
+              <input
+                type="radio"
+                value="true"
+                [(ngModel)]="roomType.isCooked"
+                name="isCooked"
+              />
+              Có
+              <input
+                style="margin-left: 3%"
+                type="radio"
+                [(ngModel)]="roomType.isCooked"
+                name="isCooked"
+                value="false"
+              />
+              Không
+            </div>
+          </div>
+          <div class="form-row">
+            <div style="margin: 0 20px">
+              <label class="labels">Có máy lạnh không ?</label><br /><input
+                [(ngModel)]="roomType.isAirConditioned"
+                type="radio"
+                value="true"
+                name="isAirConditioned"
+              />
+              Có
+              <input
+                style="margin-left: 3%"
+                [(ngModel)]="roomType.isAirConditioned"
+                type="radio"
+                value="false"
+                name="isAirConditioned"
+              />
+              Không
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-data textarea">
+              <div class="form-row submit-btn">
+                <div class="input-data">
+                  <div class="inner"></div>
+                  <input type="submit" (click)="submitForm()" value="THÊM" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- ket thuc -->
+    <!-- <div class="container rounded bg-white mt-5 mb-5">
       <div class="row">
         <div class="col-md-2 border-right"></div>
         <div class="col-md-10">
           <div class="p-3 py-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Thêm loại phòng</h4>
+              <h4 class="text-center">Thêm loại phòng</h4>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
@@ -84,14 +187,14 @@
                 />
               </div>
               <div class="col-md-12">
-                <button (click)="submitForm()" class="btn btn-primary mt-3">
-                  Thêm Phòng
+                <button (click)="submitForm()" class="btn btn-success mt-3">
+                  Xác nhận
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

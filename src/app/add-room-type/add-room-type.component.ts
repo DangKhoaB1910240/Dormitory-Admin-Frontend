@@ -42,6 +42,7 @@ export class AddRoomTypeComponent implements OnInit {
   }
 
   submitForm() {
+    console.log(this.selectedImage, this.roomType);
     if (
       !this.selectedImage ||
       this.roomType.name == '' ||

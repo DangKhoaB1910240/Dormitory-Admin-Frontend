@@ -4,3 +4,35 @@
   font-weight: bold;
   text-decoration: underline;
 }
+* {
+  font-family: "Poppins", sans-serif;
+}
+.glowing-button {
+  padding: 10px 20px;
+  font-size: 13px;
+  background: linear-gradient(45deg, rgb(59, 99, 126), #0b3142);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+.glowing-button:hover {
+  animation: glowing 1.5s infinite;
+}
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #2d97df, 0 0 20px #309ae0;
+  }
+
+  50% {
+    box-shadow: 0 0 50px #2f94d8, 0 0 40px #3098dd;
+  }
+
+  100% {
+    box-shadow: 0 0 5px #319ae0, 0 0 20px #2f98dd;
+  }
+}

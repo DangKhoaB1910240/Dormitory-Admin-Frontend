@@ -14,7 +14,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Page } from '../Models/page/page';
 import { ThongKeResponseDTO } from '../Models/bill/thong-ke-response-dto';
 import { DatePipe } from '@angular/common';
-
+import * as jsPDF from 'jspdf';
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
@@ -44,6 +44,16 @@ export class BillComponent implements OnInit {
   limit!: number;
   thongKe: ThongKeResponseDTO[] = [];
   t!: ThongKeResponseDTO;
+  billPrintPDF!: Bill;
+  invoiceData = {
+    customer: 'John Doe',
+    items: [
+      { description: 'Item 1', price: 10 },
+      { description: 'Item 2', price: 20 },
+      { description: 'Item 3', price: 30 },
+    ],
+    total: 60,
+  };
   changePage(page: number): void {
     this.currentPage = page;
     this.billService.getAllBills(this.currentPage - 1, 6).subscribe({
@@ -62,6 +72,11 @@ export class BillComponent implements OnInit {
         error: (error) => {},
       });
     }
+  }
+  printPDF(b: Bill) {
+    this.billPrintPDF = b;
+    this.detect.detectChanges();
+    setTimeout(() => {}, 1);
   }
   ngOnInit(): void {
     this.adminService
